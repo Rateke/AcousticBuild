@@ -33,6 +33,7 @@ AMBIENTES_NBR10152: dict[str, dict[str, Any]] = {
 # Cada cenário da NBR 15575 implica um tipo de ambiente receptor
 CENARIO_PARA_AMBIENTE: dict[str, str] = {
     'parede_entre_unidades': 'dormitorio',
+    'parede_entre_unidades_sem_dormitorio': 'sala_estar',
     'parede_dormitorio_area_comum': 'dormitorio',
     'sala_aula_educacional': 'sala_aula',
     'generico': 'sala_estar',

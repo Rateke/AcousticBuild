@@ -12,10 +12,20 @@ from formatar import num
 CRITERIOS_CENARIOS: dict[str, dict[str, dict[str, Any]]] = {
     'aereo': {
         'parede_entre_unidades': {
-            'nome': 'Parede entre unidades habitacionais autônomas (NBR 15575-4)',
+            'nome': 'Parede entre unidades autônomas, com dormitório (NBR 15575-4)',
             'minimo': 45.0,
             'intermediario': 50.0,
             'superior': 55.0,
+            'unidade': 'dB',
+            'operador': 'min',
+        },
+        # Sem dormitório de nenhum dos lados a norma aceita 5 dB a menos. Faltava:
+        # a única opção entre unidades era a mais exigente.
+        'parede_entre_unidades_sem_dormitorio': {
+            'nome': 'Parede entre unidades autônomas, sem dormitório (NBR 15575-4)',
+            'minimo': 40.0,
+            'intermediario': 45.0,
+            'superior': 50.0,
             'unidade': 'dB',
             'operador': 'min',
         },
@@ -44,36 +54,41 @@ CRITERIOS_CENARIOS: dict[str, dict[str, dict[str, Any]]] = {
             'operador': 'min',
         },
     },
+    # NBR 15575-3: o mínimo entre unidades é L'nT,w ≤ 80 dB, e sobre áreas de uso
+    # coletivo é ≤ 55 dB. Antes o código usava 55 dB como MÍNIMO entre unidades —
+    # que na norma é o patamar SUPERIOR —, e toda laje do catálogo reprovava.
     'impacto': {
         'laje_entre_unidades': {
             'nome': 'Laje/piso entre unidades habitacionais autônomas (NBR 15575-3)',
-            'minimo': 55.0,        # L'nT <= 55 dB
-            'intermediario': 50.0, # L'nT <= 50 dB
-            'superior': 45.0,      # L'nT <= 45 dB
+            'minimo': 80.0,        # L'nT,w <= 80 dB
+            'intermediario': 65.0, # L'nT,w <= 65 dB
+            'superior': 55.0,      # L'nT,w <= 55 dB
             'unidade': 'dB',
             'operador': 'max',
         },
         'laje_coletiva_dormitorio': {
-            'nome': 'Laje entre áreas de uso coletivo e dormitório (NBR 15575-3)',
-            'minimo': 50.0,
-            'intermediario': 45.0,
-            'superior': 40.0,
-            'unidade': 'dB',
-            'operador': 'max',
-        },
-        'laje_escolar_educacional': {
-            'nome': 'Piso entre salas de aula / Ambientes escolares (Referencial NBR 15575 / Artigo)',
+            'nome': 'Laje de área de uso coletivo sobre unidades habitacionais (NBR 15575-3)',
             'minimo': 55.0,
             'intermediario': 50.0,
             'superior': 45.0,
+            'unidade': 'dB',
+            'operador': 'max',
+        },
+        # Escolas não estão na NBR 15575 (que é residencial): este cenário toma
+        # emprestado o critério entre unidades, como o próprio nome declara.
+        'laje_escolar_educacional': {
+            'nome': 'Piso entre salas de aula / Ambientes escolares (Referencial NBR 15575-3)',
+            'minimo': 80.0,
+            'intermediario': 65.0,
+            'superior': 55.0,
             'unidade': 'dB',
             'operador': 'max',
         },
         'generico': {
             'nome': 'Ruído de impacto geral (Referencial NBR 15575-3)',
-            'minimo': 55.0,
-            'intermediario': 50.0,
-            'superior': 45.0,
+            'minimo': 80.0,
+            'intermediario': 65.0,
+            'superior': 55.0,
             'unidade': 'dB',
             'operador': 'max',
         },

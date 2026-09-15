@@ -23,7 +23,7 @@ export const GLOSSARIO = {
   LnT: {
     titulo: 'Barulho de passos que chega embaixo (L’nT)',
     texto: 'O nível de ruído que chega no apartamento de baixo quando alguém pisa forte ou derruba algo em cima. Aqui é o contrário: quanto menor, melhor.',
-    ancora: 'A NBR 15575 exige no máximo 55 dB entre apartamentos.',
+    ancora: 'Entre apartamentos a NBR 15575 aceita no máximo 80 dB; até 55 dB é o nível superior.',
   },
   Lnw: {
     titulo: 'Impacto de laboratório (Ln,w)',

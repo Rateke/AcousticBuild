@@ -39,12 +39,13 @@ Os valores estão parametrizados por cenário em [`backend/criteria.py`](../back
 
 | Cenário | Tipo | Mínimo | Intermediário | Superior |
 |---|---|---|---|---|
-| Parede entre unidades autônomas | aéreo | 45 dB | 50 dB | 55 dB |
+| Parede entre unidades autônomas, com dormitório | aéreo | 45 dB | 50 dB | 55 dB |
+| Parede entre unidades autônomas, sem dormitório | aéreo | 40 dB | 45 dB | 50 dB |
 | Parede entre dormitório e área comum de trânsito | aéreo | 40 dB | 45 dB | 50 dB |
 | Salas de aula / ambientes de ensino | aéreo | 45 dB | 50 dB | 55 dB |
-| Laje/piso entre unidades autônomas | impacto | 55 dB | 50 dB | 45 dB |
-| Laje entre área de uso coletivo e dormitório | impacto | 50 dB | 45 dB | 40 dB |
-| Piso entre salas de aula | impacto | 55 dB | 50 dB | 45 dB |
+| Laje/piso entre unidades autônomas | impacto | 80 dB | 65 dB | 55 dB |
+| Laje de área de uso coletivo sobre unidades | impacto | 55 dB | 50 dB | 45 dB |
+| Piso entre salas de aula (referencial) | impacto | 80 dB | 65 dB | 55 dB |
 
 > Repare que nos cenários de impacto os limites **decrescem** do mínimo para o superior.
 > Não é erro de digitação: é a consequência de $L'_{nT,w}$ ser um nível de ruído, e não

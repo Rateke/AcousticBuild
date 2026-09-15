@@ -153,8 +153,58 @@ def test_impacto_do_caso_reportado_fecha_a_conta():
     ).json()
     assert d["detalhes"]["ln_w"] == 56
     assert d["indicador_principal"]["valor"] == pytest.approx(55.39, abs=0.01)
-    # 55,39 > 55: não atende, mesmo que um arredondamento para inteiro sugira o contrário
+    assert d["classificacao"] == "atende"
+    # 55,39 > 55: fica no intermediário, mesmo que o arredondamento para inteiro sugira superior
+    assert d["nivel_normativo"] == "intermediario"
+
+
+# --- Limites da NBR 15575 ------------------------------------------------------
+# Já esteve errado: o mínimo de piso entre unidades estava em 55 dB (o patamar
+# superior da norma) e toda laje do catálogo dava "Não Atende".
+
+def test_limites_minimos_sao_os_da_norma():
+    assert CRITERIOS_CENARIOS["impacto"]["laje_entre_unidades"]["minimo"] == 80   # NBR 15575-3
+    assert CRITERIOS_CENARIOS["impacto"]["laje_coletiva_dormitorio"]["minimo"] == 55
+    assert CRITERIOS_CENARIOS["aereo"]["parede_entre_unidades"]["minimo"] == 45    # NBR 15575-4, com dormitório
+    assert CRITERIOS_CENARIOS["aereo"]["parede_entre_unidades_sem_dormitorio"]["minimo"] == 40
+    # no piso os patamares descem (menor é melhor); na parede sobem (maior é melhor)
+    for cenario in CRITERIOS_CENARIOS["impacto"].values():
+        assert cenario["minimo"] > cenario["intermediario"] > cenario["superior"]
+    for cenario in CRITERIOS_CENARIOS["aereo"].values():
+        assert cenario["minimo"] < cenario["intermediario"] < cenario["superior"]
+
+
+@pytest.mark.parametrize("codigo,nivel", [
+    ("LAJ-MAC-010", "minimo"),        # 79,4 dB
+    ("LAJ-MAC-014", "minimo"),        # 75,4 dB
+    ("LAJ-VIN-014", "minimo"),        # 67,4 dB
+    ("LAJ-FLU-014", "intermediario"), # 55,4 dB
+])
+def test_lajes_do_catalogo_entre_unidades(codigo, nivel):
+    d = calcular(tipo_analise="impacto", cenario="laje_entre_unidades", sistema_codigo=codigo).json()
+    assert d["classificacao"] == "atende"
+    assert d["nivel_normativo"] == nivel
+
+
+def test_sobre_area_coletiva_o_criterio_e_mais_exigente():
+    d = calcular(tipo_analise="impacto", cenario="laje_coletiva_dormitorio", sistema_codigo="LAJ-FLU-014").json()
+    # 55,39 dB passa entre unidades, mas não sobre um salão de festas (máximo 55 dB)
     assert d["classificacao"] == "nao_atende"
+
+
+def test_parede_sem_dormitorio_aceita_5_db_a_menos():
+    com = calcular(tipo_analise="aereo", cenario="parede_entre_unidades", l1=85, sistema_codigo="PAR-CER-019").json()
+    sem = calcular(tipo_analise="aereo", cenario="parede_entre_unidades_sem_dormitorio", l1=85, sistema_codigo="PAR-CER-019").json()
+    assert com["classificacao"] == "nao_atende"   # 42,85 < 45
+    assert sem["classificacao"] == "atende"       # 42,85 >= 40
+
+
+def test_laje_aprovada_no_minimo_nao_recebe_conselho_de_manter_tudo():
+    """79 dB passa na norma, mas é muito barulho: a recomendação não pode ser "manter"."""
+    d = calcular(tipo_analise="impacto", cenario="laje_entre_unidades", sistema_codigo="LAJ-MAC-010").json()
+    titulos = " ".join(s["recomendacao"] for s in d["sugestoes"])
+    assert "Manter" not in titulos
+    assert "mínimo" in titulos
 
 
 def test_conforto_do_impacto_explica_que_e_maquina_de_impacto():

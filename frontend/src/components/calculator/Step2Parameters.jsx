@@ -16,6 +16,7 @@ const AMBIENTES_10152 = [
 // Palpite inicial a partir do cenário — o usuário pode trocar
 const SUGESTAO_POR_CENARIO = {
   parede_entre_unidades: 'dormitorio',
+  parede_entre_unidades_sem_dormitorio: 'sala_estar',
   parede_dormitorio_area_comum: 'dormitorio',
   sala_aula_educacional: 'sala_aula',
   generico: 'sala_estar',

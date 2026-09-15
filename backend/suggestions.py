@@ -22,9 +22,11 @@ def gerar_sugestoes(tipo: str, resultado: dict, classificacao: dict | None = Non
 
     limites = (classificacao or {}).get('limites') or {}
     nivel = (classificacao or {}).get('nivel')
-    lim_min = float(limites.get('minimo', 45.0 if tipo_norm == 'aereo' else 55.0))
-    lim_inter = float(limites.get('intermediario', lim_min + 5.0))
-    lim_sup = float(limites.get('superior', lim_min + 10.0))
+    # sem classificação, cai nos limites entre unidades (NBR 15575-4 e 15575-3)
+    padrao = (45.0, 50.0, 55.0) if tipo_norm == 'aereo' else (80.0, 65.0, 55.0)
+    lim_min = float(limites.get('minimo', padrao[0]))
+    lim_inter = float(limites.get('intermediario', padrao[1]))
+    lim_sup = float(limites.get('superior', padrao[2]))
 
     if tipo_norm == 'aereo':
         dnt = detalhes.get('dnt', principal.get('valor', 0))
@@ -96,7 +98,7 @@ def gerar_sugestoes(tipo: str, resultado: dict, classificacao: dict | None = Non
             sugestoes.append({
                 'recomendacao': 'Implementar contrapiso flutuante com manta acústica resiliente',
                 'motivo': (
-                    'Transmissão de impacto severa (L\'nT > 65 dB, similar ao piso cerâmico sem tratamento). '
+                    f'Transmissão de impacto severa: {num(excesso, 1)} dB acima do máximo de {num(lim_min, 0)} dB. '
                     'É indispensável a execução de contrapiso flutuante desacoplado da laje por manta de polietileno '
                     'expandido, lã de rocha de alta densidade ou borracha, com virada perimetral nas paredes.'
                 ),
@@ -116,11 +118,33 @@ def gerar_sugestoes(tipo: str, resultado: dict, classificacao: dict | None = Non
                     'acústico, carpete ou inserção de manta de amortecimento sob piso laminado atenua diretamente o impacto.'
                 ),
             })
+        # Passar no mínimo de piso não quer dizer silêncio: entre unidades a norma
+        # aceita até 80 dB. A orientação acompanha o patamar alcançado.
+        elif nivel == 'minimo' or lnt > lim_inter:
+            sugestoes.append({
+                'recomendacao': 'Aprovado no nível mínimo — mas o barulho de passos ainda é alto',
+                'motivo': (
+                    f'Com {num(lnt, 1)} dB o sistema cumpre o máximo de {num(lim_min, 0)} dB, mas fica '
+                    f'{num(lnt - lim_inter, 1)} dB acima do nível intermediário ({num(lim_inter, 0)} dB). '
+                    'Contrapiso flutuante sobre manta resiliente ou piso vinílico acústico costumam '
+                    'reduzir o bastante para chegar lá.'
+                ),
+            })
+        elif lnt > lim_sup:
+            sugestoes.append({
+                'recomendacao': 'Bom desempenho — nível intermediário atingido',
+                'motivo': (
+                    f'{num(lnt, 1)} dB fica abaixo do intermediário ({num(lim_inter, 0)} dB). Para o nível '
+                    f'superior ({num(lim_sup, 0)} dB), o caminho é uma manta de maior desempenho sob o '
+                    'contrapiso ou forro com isolamento no andar de baixo.'
+                ),
+            })
         else:
             sugestoes.append({
-                'recomendacao': 'Manter a solução de piso e laje atual',
+                'recomendacao': 'Excelente desempenho — nível superior da NBR 15575',
                 'motivo': (
-                    f'Com {num(lnt, 1)} dB o sistema cumpre o máximo de {num(lim_min, 0)} dB deste cenário (quanto menor, melhor).'
+                    f'{num(lnt, 1)} dB atinge o patamar superior ({num(lim_sup, 0)} dB), o mais alto '
+                    'previsto pela norma para este cenário (quanto menor, melhor).'
                 ),
             })
 
