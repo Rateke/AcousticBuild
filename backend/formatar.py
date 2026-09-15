@@ -5,7 +5,7 @@ O separador decimal em pt-BR é a vírgula. Sem isso o mesmo relatório mostrava
 """
 
 
-def num(valor: float | int | None, casas: int = 1) -> str:
+def num(valor: float | None, casas: int = 1) -> str:
     """Número formatado com vírgula decimal. `None` vira travessão."""
     if valor is None:
         return '—'

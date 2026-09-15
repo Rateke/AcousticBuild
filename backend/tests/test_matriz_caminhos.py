@@ -22,8 +22,8 @@ from fastapi.testclient import TestClient
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from criteria import CRITERIOS_CENARIOS  # type: ignore  # noqa: E402
-from main import app  # type: ignore  # noqa: E402
+from criteria import CRITERIOS_CENARIOS  # type: ignore
+from main import app  # type: ignore
 
 client = TestClient(app)
 

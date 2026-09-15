@@ -32,7 +32,13 @@ VALIDADE_MINUTOS = 30
 MAX_PEDIDOS_POR_JANELA = 3
 JANELA_MINUTOS = 15
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173").rstrip("/")
+# Endereço usado no link do e-mail. Na Vercel, sem FRONTEND_URL definido, vale o
+# domínio de produção que a própria Vercel informa.
+_dominio_vercel = os.getenv("VERCEL_PROJECT_PRODUCTION_URL")
+FRONTEND_URL = (
+    os.getenv("FRONTEND_URL")
+    or (f"https://{_dominio_vercel}" if _dominio_vercel else "http://localhost:5173")
+).rstrip("/")
 
 
 def _agora() -> datetime:

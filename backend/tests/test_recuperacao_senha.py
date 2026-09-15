@@ -16,10 +16,10 @@ from sqlalchemy.pool import StaticPool
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-import recuperacao  # type: ignore  # noqa: E402
-from database import Base, get_db  # type: ignore  # noqa: E402
-from main import app  # type: ignore  # noqa: E402
-from models import TokenRedefinicaoSenha  # type: ignore  # noqa: E402
+import recuperacao  # type: ignore
+from database import Base, get_db  # type: ignore
+from main import app  # type: ignore
+from models import TokenRedefinicaoSenha  # type: ignore
 
 EMAIL = "pessoa@exemplo.com"
 SENHA_ANTIGA = "senhaantiga"

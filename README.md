@@ -130,6 +130,28 @@ npm run dev
 
 ---
 
+## ☁️ Publicar na Vercel
+
+O `vercel.json` já deixa o projeto pronto para rodar inteiro na Vercel: o site em
+`/` e a API em `/api`, no mesmo endereço.
+
+1. Entre em **https://vercel.com** com a sua conta do GitHub e clique em **Add New → Project**.
+2. Importe o repositório **AcousticBuild**. Não altere as configurações de build: a Vercel lê o `vercel.json`.
+3. Em **Settings → Environment Variables**, cadastre:
+
+| Variável | Obrigatória | Para quê |
+|---|:---:|---|
+| `SECRET_KEY` | **sim** | Assina os logins. Use um texto longo e aleatório — sem ela, qualquer pessoa que leia o código consegue forjar um login. |
+| `DATABASE_URL` | recomendada | Banco Postgres. Sem ele a calculadora funciona, mas contas e histórico se perdem quando o servidor reinicia. |
+| `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD` | não | Envio do e-mail de recuperação de senha. |
+
+4. Para ter um Postgres gratuito, crie um banco na aba **Storage** do projeto (por exemplo, Neon) e conecte ao projeto: a Vercel cadastra o endereço do banco sozinha.
+5. Clique em **Deploy**. O catálogo de materiais e sistemas é criado automaticamente no primeiro acesso.
+
+Depois disso, cada envio para a `main` publica uma nova versão.
+
+---
+
 ## 📂 Estrutura do Projeto
 
 ```
@@ -151,7 +173,7 @@ SA-acousticBuild/
 │   ├── suggestions.py       # Recomendações a partir do resultado
 │   ├── formatar.py          # Números com vírgula decimal (pt-BR)
 │   ├── seed.py              # Popula o catálogo construtivo
-│   ├── tests/               # Suíte pytest (31 testes)
+│   ├── tests/               # Suíte pytest (motor, API, caminhos de cálculo, Vercel)
 │   └── requirements.txt     # Dependências Python
 │
 ├── frontend/

@@ -1,9 +1,11 @@
 import axios from 'axios';
 
-// Em desenvolvimento o back-end roda local; em produção basta definir
-// VITE_API_URL no ambiente de build — nada de endereço fixo no código.
+// Em desenvolvimento o back-end roda em localhost:8000. Publicado na Vercel,
+// front e back dividem o mesmo domínio e a API responde em /api.
+// VITE_API_URL, quando definido, tem prioridade sobre os dois.
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000',
+  baseURL: import.meta.env.VITE_API_URL
+    || (import.meta.env.PROD ? '/api' : 'http://127.0.0.1:8000'),
 });
 
 api.interceptors.request.use((config) => {

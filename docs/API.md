@@ -14,8 +14,10 @@ Fontes: [`FONTES.md`](FONTES.md).
 http://127.0.0.1:8000
 ```
 
-No front-end o endereço vem de `VITE_API_URL`, com esse valor como padrão de
-desenvolvimento (`frontend/src/services/api.js`).
+Publicada na Vercel, a API responde no mesmo domínio do site, com o prefixo
+`/api` na frente de todas as rotas (ex.: `/api/acustica/calcular`). O front-end
+escolhe sozinho: `localhost:8000` em desenvolvimento, `/api` em produção, ou o
+valor de `VITE_API_URL` quando definido (`frontend/src/services/api.js`).
 
 ---
 
