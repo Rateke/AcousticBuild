@@ -1,0 +1,130 @@
+.section {
+  background: rgba(0, 20, 52, 0.62);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 100px 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.container {
+  max-width: 1100px;
+  width: 100%;
+  text-align: center;
+}
+
+.label {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.highlight {
+  color: #1E5EFF;
+}
+
+.description {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.7;
+  max-width: 650px;
+  margin: 0 auto 60px;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 40px 30px;
+  text-align: left;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.iconBox {
+  width: 64px;
+  height: 64px;
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.card:hover .iconBox {
+  border-color: #1E5EFF;
+  transform: scale(1.05);
+}
+
+.cardTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 12px;
+}
+
+.cardText {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.6;
+}
+
+.scrollIndicator {
+  margin-top: 60px;
+  animation: bounce 2s infinite;
+  cursor: pointer;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(10px);
+  }
+  60% {
+    transform: translateY(5px);
+  }
+}
+
+@media (max-width: 968px) {
+  .section {
+    padding: 60px 30px 30px;
+  }
+  
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+  }
+}

@@ -1,0 +1,124 @@
+﻿/* Transparente: quem desenha o fundo é a imagem da página da calculadora */
+.header {
+  position: relative;
+  background: transparent;
+  color: #FFFFFF;
+  padding: 120px 48px 40px;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  /* mantém o texto legível sobre a arte do fundo */
+  text-shadow: 0 2px 12px rgba(0, 8, 24, 0.75);
+}
+
+.title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.highlight {
+  color: #2F6FFF;
+}
+
+.subtitle {
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.6;
+  margin-bottom: 34px;
+}
+
+/* Stepper */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+/* Espacamento fixo e uniforme entre os passos:
+   fim do label -> 10px -> linha de 40px -> 10px -> proximo circulo */
+.stepItem:not(:last-child) {
+  margin-right: 60px;
+}
+
+.stepItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 19px;
+  left: calc(100% + 10px);
+  width: 40px;
+  height: 2px;
+  border-top: 2px dashed rgba(47, 111, 255, 0.6);
+}
+
+.stepCircle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.stepCircle.done {
+  background: #2F6FFF;
+  border-color: #2F6FFF;
+  color: #FFFFFF;
+}
+
+.stepCircle.current {
+  background: #2F6FFF;
+  border-color: #2F6FFF;
+  color: #FFFFFF;
+}
+
+.stepLabel {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+}
+
+.stepLabelCurrent {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 96px 20px 28px;
+  }
+  .title {
+    font-size: 1.7rem;
+  }
+  .stepItem:not(:last-child) {
+    margin-right: 28px;
+  }
+  .stepItem:not(:last-child)::after {
+    width: 12px;
+  }
+  .stepLabel {
+    font-size: 0.72rem;
+  }
+}

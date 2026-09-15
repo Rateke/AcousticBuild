@@ -1,0 +1,269 @@
+.page {
+  min-height: 70vh;
+  /* paradas em px (não em %) para o escurecimento não variar com a altura da página,
+     que muda entre Parede e Piso por terem campos diferentes */
+  background:
+    linear-gradient(180deg,
+      rgba(10, 17, 40, 0.30) 0px,
+      rgba(10, 17, 40, 0.55) 170px,
+      rgba(10, 17, 40, 0.93) 360px,
+      #0A1128 500px),
+    url('../assets/bg-calculadora.jpg') top center / 100% auto no-repeat,
+    #0A1128;
+  padding-bottom: 80px;
+}
+
+.wizard {
+  max-width: 860px;
+  margin: -20px auto 0;
+  padding: 0 28px;
+}
+
+.card {
+  background: #0D1B3D;
+  border-radius: 22px;
+  padding: 32px;
+  color: #FFFFFF;
+  margin-top: 12px;
+}
+
+.cardTitle {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fieldRowDouble {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.labelInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+}
+
+.inputUnit {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 12px 14px;
+  background: #101E42;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input:focus,
+.select:focus {
+  border-color: #2F6FFF;
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.inputUnit .unit {
+  position: absolute;
+  right: 14px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.8rem;
+  pointer-events: none;
+}
+
+.inputUnit .input {
+  padding-right: 42px;
+}
+
+/* Botões */
+.cardActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: #1e3a8a;
+  color: #f8fafc;
+  border: 1px solid rgba(147, 197, 253, 0.22);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.primaryBtn:hover {
+  background: #1d4ed8;
+  border-color: rgba(147, 197, 253, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.35);
+  color: #ffffff;
+}
+
+.primaryBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.secondaryBtn {
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #cbd5e1;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.secondaryBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.selectionBtn {
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #0c1836;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.selectionBtn:hover {
+  background: #11224d;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.selectionBtnActive {
+  background: rgba(30, 58, 138, 0.3);
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Erro / carregando */
+.errorBox {
+  margin-top: 16px;
+  padding: 12px 14px;
+  background: rgba(244, 63, 94, 0.15);
+  border: 1px solid rgba(244, 63, 94, 0.5);
+  color: #fda4af;
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
+
+.loadingBox {
+  margin-top: 16px;
+  text-align: center;
+  color: #2F6FFF;
+  font-weight: 600;
+}
+
+.wizardFooter {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media (max-width: 700px) {
+  .fieldRowDouble {
+    grid-template-columns: 1fr;
+  }
+  .wizard {
+    padding: 0 14px;
+  }
+  .card {
+    padding: 22px;
+  }
+}
+/* ===== Dois eixos independentes: exigência legal x conforto ===== */
+.doisEixos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.eixo {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.eixoTag {
+  display: inline-block;
+  font-size: 0.66rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  color: #9DBBFF;
+  background: rgba(47, 111, 255, 0.16);
+  border: 1px solid rgba(47, 111, 255, 0.45);
+}
+
+.eixoTagConforto {
+  color: #86EFAC;
+  background: rgba(34, 197, 94, 0.14);
+  border-color: rgba(74, 222, 128, 0.45);
+}
+
+.eixoAjuda {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.76rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.eixoAjuda strong {
+  color: rgba(255, 255, 255, 0.8);
+}
