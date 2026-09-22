@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import Footer from '../components/Footer';
+import BioModal from '../components/BioModal';
 import Reveal from '../components/Reveal';
-import { IconClipboardCheck, IconBulb, IconCircleCheck } from '../components/IconSet';
 import cidadeWireframe from '../assets/bg-sobre.jpg';
 import grupo2026 from '../assets/team/grupo-2026.jpg';
 import grupo2025 from '../assets/team/grupo-2025.jpg';
@@ -11,29 +11,15 @@ import fotoFernando from '../assets/team/fernando-rateke.jpg';
 import fotoMaria from '../assets/team/maria-eduarda.jpg';
 import fotoJulia from '../assets/team/julia-verissimo.jpg';
 import fotoSara from '../assets/team/sara-rotenski.jpg';
+import fotoJoao from '../assets/team/joao-hartmann.jpg';
 import styles from '../style/About.module.css';
 
-const PILARES = [
-  {
-    icon: IconClipboardCheck,
-    titulo: 'Nossa missão',
-    texto: 'Promover bem-estar e qualidade de vida através de soluções acústicas inteligentes e acessíveis.',
-  },
-  {
-    icon: IconBulb,
-    titulo: 'Nossa visão',
-    texto: 'Ser referência em tecnologia acústica, contribuindo para cidades mais silenciosas e saudáveis.',
-  },
-  {
-    icon: IconCircleCheck,
-    titulo: 'Nossos valores',
-    texto: 'Precisão, inovação, ética e compromisso com a saúde e o meio ambiente.',
-  },
-];
+
 
 const FERNANDO = {
   nome: 'Fernando Rateke Neto',
   foto: fotoFernando,
+  resumo: 'Estudante de Desenvolvimento de Sistemas na Escola SESI e integrante da Iniciação Científica de Matemática. Finalista do Infomatrix 2025 e da FEBRACE 2026.',
   bio: [
     'Fernando Rateke Neto nasceu em Florianópolis em 2008 e atualmente é estudante do 3º ano do Ensino Médio integrado ao curso técnico em Desenvolvimento de Sistemas na Escola SESI. Pretende se candidatar a universidades nos Estados Unidos para cursar uma graduação na área de tecnologia e seguir carreira em programação, com interesse no desenvolvimento full-stack e na área de jogos.',
     'O estudante faz parte do grupo de Iniciação Científica de Matemática de sua escola desde 2025. Foi finalista do Infomatrix 2025 com o AcousticBuild, sendo credenciado para o MILSET 2026, em Fortaleza, Ceará. Em 2026, também participou da FEBRACE, ampliando sua experiência em pesquisa científica e desenvolvimento tecnológico.',
@@ -43,6 +29,7 @@ const FERNANDO = {
 const MARIA = {
   nome: 'Maria Eduarda Tessari',
   foto: fotoMaria,
+  resumo: 'Estudante de Desenvolvimento de Sistemas na Escola SESI, com interesse em unir tecnologia e matemática à saúde. Finalista do Infomatrix 2025, FEBRACE e FEBIC 2026.',
   bio: [
     'Maria Eduarda Tessari nasceu em Florianópolis em 2008 e atualmente é estudante do 3º ano do Ensino Médio integrado ao curso técnico em Desenvolvimento de Sistemas na Escola SESI. Pretende ingressar em uma universidade para cursar Medicina, construindo uma carreira que integre tecnologia e matemática à área da saúde.',
     'A estudante faz parte do grupo de Iniciação Científica de Matemática de sua escola desde 2025 e foi finalista do Infomatrix 2025 com o AcousticBuild, sendo credenciada para o MILSET 2026, em Fortaleza, Ceará. Em 2026, também participou da FEBRACE, ampliando sua experiência em pesquisa científica e desenvolvimento tecnológico.',
@@ -52,6 +39,7 @@ const MARIA = {
 const JULIA = {
   nome: 'Júlia Veríssimo',
   foto: fotoJulia,
+  resumo: 'Estudante de Desenvolvimento de Sistemas na Escola SESI, com objetivo de cursar Medicina. Integrante da Iniciação Científica de Matemática.',
   bio: [
     'Júlia Veríssimo nasceu em Florianópolis em 2009, atualmente é estudante do 3º ano do Ensino Médio integrado ao curso técnico em Desenvolvimento de Sistemas na Escola SESI. Pretende ingressar na Universidade Federal de Santa Catarina no curso de Medicina e construir uma carreira na área de Pediatria, com o objetivo de atuar na promoção da saúde e no cuidado de crianças e adolescentes.',
     'A estudante faz parte do grupo de Iniciação Científica de Matemática de sua escola desde 2026.',
@@ -61,6 +49,7 @@ const JULIA = {
 const SARA = {
   nome: 'Sara Rotenski Pereira',
   foto: fotoSara,
+  resumo: 'Acadêmica de Ciência de Dados e Inteligência Artificial no UniSENAI. Finalista da FEBRACE 2026 e medalha de ouro na Copa Science 2025, no México.',
   bio: [
     'Sara Rotenski Pereira nasceu em Florianópolis em 2007. Em 2025, se formou no Ensino Médio integrado ao curso técnico em Desenvolvimento de Sistemas na Escola SESI e, atualmente, é acadêmica do bacharelado em Ciência de Dados e Inteligência Artificial no UniSENAI.',
     'A estudante fez parte do grupo de Iniciação Científica de Matemática de sua escola de 2023 até 2025 e foi finalista da FEBRACE 2025 graças ao projeto “Desenvolvimento de uma Plataforma Integrada para Análise dos Níveis de Ruído Rodoviário”, que desenvolveu em 2024. Esse mesmo projeto também foi finalista da FENIC 2024, em Salvador e da FEBIC 2024, onde recebeu o prêmio de banner destaque (exposição) da feira e o credenciamento para a Copa Science 2025 no México. Nesse evento, o projeto foi premiado com medalha de ouro na categoria das Ciências Exatas e recebeu mais uma credencial, desta vez para a Colômbia.',
@@ -68,11 +57,22 @@ const SARA = {
   ],
 };
 
+const JOAO = {
+  nome: 'João Victor Prange Hartmann',
+  foto: fotoJoao,
+  resumo: 'Estudante de Análise e Desenvolvimento de Sistemas na Escola SESI. Atuou na programação, manutenção e documentação da plataforma.',
+  bio: [
+    'João Victor Prange Hartmann nasceu em Florianópolis em 2008. Atualmente está no 3º ano do Ensino Médio integrado ao curso técnico em Análise e Desenvolvimento de Sistemas na Escola SESI.',
+    'O integrante foi crucial para o desenvolvimento do projeto, pois auxiliou na parte da programação e manutenção da plataforma, além de auxiliar na área da documentação do projeto de forma eficaz.',
+    'O estudante pretende entrar em uma universidade para cursar dentro da área da tecnologia. Possui experiência com diversos projetos acadêmicos envolvendo programação que incluem desde sites com o objetivo de promover o foco e cuidar da saúde mental até o projeto descrito nessa plataforma.',
+  ],
+};
+
 const EQUIPES = [
   {
     ano: '2026',
     atual: true,
-    descricao: 'Equipe responsável pela evolução da plataforma e pela participação na FEBRACE e no MILSET 2026.',
+    descricao: 'Equipe responsável pelo desenvolvimento e evolução da plataforma',
     capa: grupo2026,
     legenda: 'Fernando Rateke Neto, Maria Eduarda Tessari e Júlia Veríssimo',
     integrantes: [FERNANDO, MARIA, JULIA],
@@ -80,7 +80,7 @@ const EQUIPES = [
   {
     ano: '2025',
     atual: false,
-    descricao: 'Equipe que deu origem ao projeto e o levou à final do Infomatrix 2025.',
+    descricao: 'Equipe que deu origem ao projeto e o levou à final do Infomatrix 2025 e à final da FEBRACE.',
     capa: grupo2025,
     legenda: 'Maria Eduarda Tessari, Sara Rotenski Pereira e Fernando Rateke Neto',
     integrantes: [FERNANDO, MARIA, SARA],
@@ -122,6 +122,8 @@ const FONT_GROUPS = [
 
 export default function About() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // Pessoa com a biografia aberta no modal (null = modal fechado).
+  const [bioAberta, setBioAberta] = useState(null);
 
   return (
     <div className={styles.page}>
@@ -139,48 +141,12 @@ export default function About() {
             forma como o desempenho acústico é pensado nas edificações.
           </p>
         </div>
-
-        <div className={styles.pilaresGrid}>
-          {PILARES.map(({ icon: Icon, titulo, texto }, index) => (
-            <Reveal key={titulo} delay={index * 100}>
-              <div className={styles.pilarCard}>
-                <div className={styles.pilarIcon}>
-                  <Icon size={34} color="#2F6FFF" />
-                </div>
-                <h2 className={styles.pilarTitulo}>{titulo}</h2>
-                <p className={styles.pilarTexto}>{texto}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section className={styles.projeto}>
-        <Reveal className={styles.bloco}>
-          <span className={styles.label}>O projeto</span>
-          <h2 className={styles.sectionTitle}>Ciência aplicada à acústica de edificações</h2>
-          <p>
-            O AcousticBuild é um projeto científico e tecnológico que investiga e desenvolve uma
-            ferramenta computacional para estimar e analisar o desempenho acústico de sistemas
-            construtivos. Combina fundamentação teórica em acústica de edificações, normas técnicas,
-            experimentação com medições em ambientes reais e desenvolvimento de software.
-          </p>
-          <p>
-            Sua proposta é transformar dados físicos e acústicos em análises compreensíveis,
-            permitindo avaliar situações de ruído aéreo e de impacto, visualizar os resultados e
-            entender os métodos, fontes e limitações envolvidos.
-          </p>
-        </Reveal>
       </section>
 
       <section className={styles.equipe}>
         <Reveal className={styles.bloco}>
           <span className={styles.label}>Equipe</span>
-          <h2 className={styles.sectionTitle}>Quem constrói o AcousticBuild</h2>
-          <p>
-            Somos estudantes e pesquisadores do grupo de Iniciação Científica de Matemática da Escola
-            SESI, em Florianópolis.
-          </p>
+          <h2 className={styles.sectionTitle}>Quem constrói o AcousticBuild:</h2>
         </Reveal>
 
         {EQUIPES.map((equipe, ei) => (
@@ -213,15 +179,20 @@ export default function About() {
                     <article className={styles.pessoaCard}>
                       <img src={pessoa.foto} alt={pessoa.nome} className={styles.pessoaFoto} loading="lazy" />
                       <h3 className={styles.pessoaNome}>{pessoa.nome}</h3>
-                      {jaApresentado ? (
+                      {jaApresentado && (
                         <p className={styles.pessoaRepetido}>
                           Também integra a equipe atual — biografia na seção de 2026.
                         </p>
-                      ) : (
-                        pessoa.bio.map((paragrafo, i) => (
-                          <p key={i} className={styles.pessoaBio}>{paragrafo}</p>
-                        ))
                       )}
+                      {/* O card mostra só o resumo: o texto completo abre no modal. */}
+                      <p className={styles.pessoaResumo}>{pessoa.resumo}</p>
+                      <button
+                        type="button"
+                        className={styles.pessoaToggle}
+                        onClick={() => setBioAberta(pessoa)}
+                      >
+                        Saiba mais →
+                      </button>
                     </article>
                   </Reveal>
                 );
@@ -229,6 +200,32 @@ export default function About() {
             </div>
           </div>
         ))}
+
+        {/* O João colaborou com o projeto mas não está nas fotos das equipes de
+            2026 e 2025 — por isso ganha um bloco próprio, abaixo dos anos. */}
+        <div className={styles.colabBloco}>
+          <Reveal>
+            <span className={styles.label}>Colaboração</span>
+            <h3 className={styles.colabTitulo}>Também construiu o AcousticBuild</h3>
+          </Reveal>
+
+          <Reveal delay={80}>
+            <article className={`${styles.pessoaCard} ${styles.colabCard}`}>
+              <img src={JOAO.foto} alt={JOAO.nome} className={styles.colabFoto} loading="lazy" />
+              <div className={styles.colabTexto}>
+                <h3 className={styles.pessoaNome}>{JOAO.nome}</h3>
+                <p className={styles.pessoaResumo}>{JOAO.resumo}</p>
+                <button
+                  type="button"
+                  className={styles.pessoaToggle}
+                  onClick={() => setBioAberta(JOAO)}
+                >
+                  Saiba mais →
+                </button>
+              </div>
+            </article>
+          </Reveal>
+        </div>
       </section>
 
       <section id="metodologia" className={styles.fontes}>
@@ -262,6 +259,8 @@ export default function About() {
       </section>
 
       <Footer />
+
+      <BioModal pessoa={bioAberta} onClose={() => setBioAberta(null)} />
     </div>
   );
 }

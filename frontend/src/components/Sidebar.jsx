@@ -16,13 +16,11 @@ const HOME = import.meta.env.BASE_URL;
 const navItems = [
   { section: 'Navegação', items: [
     { icon: IconBuilding, label: 'O que somos?', href: `${HOME}#o-que-somos` },
+    { icon: IconChartBars, label: 'Produto', href: `${HOME}#produto` },
     { icon: IconPersonCircle, label: 'Quem somos?', href: `${HOME}#quem-somos` },
     { icon: IconPersonCircle, label: 'Sobre nós', to: '/sobre' },
-    { icon: IconChartBars, label: 'Produto', href: `${HOME}#produto` },
   ]},
   { section: 'Ferramentas', items: [
-    { icon: IconHome, label: 'Ruído aéreo (paredes)', to: '/calculadora?tipo=aereo' },
-    { icon: IconZigzag, label: 'Ruído de impacto (pisos)', to: '/calculadora?tipo=impacto' },
     { icon: IconWaveform, label: 'Minhas simulações', to: '/minhas-simulacoes' },
     { icon: IconDocument, label: 'Metodologia e fontes', to: '/sobre#metodologia' },
   ]},

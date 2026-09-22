@@ -127,6 +127,10 @@ npm run dev
 ```
 
 > ⚠️ O frontend depende do backend rodando em `http://localhost:8000`.
+>
+> 💡 `npm run dev` também funciona **da raiz do repositório**: o `package.json` da raiz
+> não tem dependências, apenas delega para o `frontend/`. Sem esse atalho, rodar `npm run dev`
+> na raiz falharia com `ENOENT ... package.json`, porque o projeto do frontend vive em `frontend/`.
 
 ---
 
@@ -156,6 +160,8 @@ Depois disso, cada envio para a `main` publica uma nova versão.
 
 ```
 SA-acousticBuild/
+├── package.json             # Atalhos da raiz (dev/build/lint/preview → frontend/)
+├── vercel.json              # Serviços frontend/ e backend/ na Vercel
 ├── backend/
 │   ├── main.py              # FastAPI, CORS, registro dos routers
 │   ├── database.py          # SQLAlchemy + SQLite
@@ -184,10 +190,10 @@ SA-acousticBuild/
 │       │   ├── calculator/       # Assistente de cálculo em 3 passos
 │       │   ├── ScrollVideoBackground.jsx  # Vídeo controlado pela rolagem
 │       │   ├── Header.jsx · Sidebar.jsx · Footer.jsx · Logo.jsx
-│       │   ├── HeroSection.jsx · SourcesStrip.jsx
+│       │   ├── HeroSection.jsx
 │       │   ├── WhatWeAreSection.jsx · WhoWeAreSection.jsx
 │       │   ├── ProductSection.jsx · AccessCalculatorButton.jsx
-│       │   ├── Reveal.jsx · ScrollToHash.jsx
+│       │   ├── BioModal.jsx · Reveal.jsx · ScrollToHash.jsx
 │       │   └── IconSet.jsx       # Biblioteca de ícones SVG
 │       ├── context/         # AuthProvider e useAuth
 │       ├── hooks/           # useAcousticCalculator, useInView
@@ -224,7 +230,7 @@ SA-acousticBuild/
 [Público — não exige conta]
   /                  Landing page
   /calculadora       Calculadora acústica (3 passos, resultado e PDF)
-  /sobre             O projeto, as equipes e a metodologia (#metodologia)
+  /sobre             A equipe (2026, 2025 e a colaboração) e a metodologia (#metodologia)
   /suporte           Canais de contato e perguntas frequentes
   /termos            Termos de uso
   /privacidade       Política de privacidade

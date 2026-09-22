@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
-import { IconRecycle, IconCircleCheck, IconBulb, IconPersonCircle, IconChevronDown } from './IconSet';
-import { scrollToSection } from '../utils/scroll';
+import { IconRecycle, IconCircleCheck, IconBulb, IconPersonCircle } from './IconSet';
 import Reveal from './Reveal';
 import styles from '../style/WhoWeAreSection.module.css';
 
@@ -50,22 +49,6 @@ export default function WhoWeAreSection() {
             })}
           </div>
         </div>
-      </div>
-
-      <div
-        className={styles.scrollIndicator}
-        role="button"
-        tabIndex={0}
-        aria-label="Rolar para baixo"
-        onClick={() => scrollToSection('produto')}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            scrollToSection('produto');
-          }
-        }}
-      >
-        <IconChevronDown size={32} color="#FFFFFF" />
       </div>
     </section>
   );

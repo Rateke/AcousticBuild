@@ -7,7 +7,7 @@ const cards = [
   {
     icon: IconBuilding,
     title: 'Rastreabilidade',
-    text: 'Cada número vem com a origem declarada: ensaio de laboratório, valor medido em campo ou estimativa teórica. Você sempre sabe em que está pisando.'
+    text: 'Cada número vem com a origem declarada: ensaio de laboratório, valor medido em campo ou estimativa teórica. '
   },
   {
     icon: IconChartUp,
@@ -59,11 +59,11 @@ export default function WhatWeAreSection() {
         role="button"
         tabIndex={0}
         aria-label="Rolar para baixo"
-        onClick={() => scrollToSection('quem-somos')}
+        onClick={() => scrollToSection('produto')}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            scrollToSection('quem-somos');
+            scrollToSection('produto');
           }
         }}
       >

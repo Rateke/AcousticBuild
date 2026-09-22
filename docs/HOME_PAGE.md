@@ -1,7 +1,8 @@
 # 🏠 Landing Page (Home)
 
-A página inicial é pública e não exige autenticação. Ela apresenta o projeto, mostra em
-que ele se baseia e leva à calculadora.
+A página inicial é pública e não exige autenticação. Ela apresenta o projeto e leva à
+calculadora. As normas e a metodologia que embasam os cálculos **não** aparecem aqui:
+eles têm a própria seção em `/sobre#metodologia`.
 
 ---
 
@@ -20,20 +21,16 @@ Montagem em `src/pages/Home.jsx`, de cima para baixo:
 │  HeroSection                                 │
 │  "Precisão acústica para melhores            │
 │   edificações."                    ▼         │
-├──────────────────────────────────────────────┤
-│  SourcesStrip                                │
-│  ABNT NBR 15575 · NBR 10152 · ISO 16283 ·    │
-│  ISO 717 · ISO 12354 · WHO · ANSI/ASA        │
 ├──────── #o-que-somos ────────────────────────┤
 │  WhatWeAreSection                            │
 │  Rastreabilidade · Eficiência · Base         │
 │  normativa                         ▼         │
-├──────── #quem-somos ─────────────────────────┤
-│  WhoWeAreSection                             │
-│  Missão + 4 cartões de valores     ▼         │
 ├──────── #produto ────────────────────────────┤
 │  ProductSection (4 cartões)                  │
 │  AccessCalculatorButton                      │
+├──────── #quem-somos ─────────────────────────┤
+│  WhoWeAreSection                             │
+│  Missão + 4 cartões de valores               │
 ├──────────────────────────────────────────────┤
 │  Footer (5 colunas)                          │
 └──────────────────────────────────────────────┘
@@ -80,7 +77,6 @@ O botão ☰ abre a `Sidebar`.
 | `pages/Home.jsx` | Montagem das seções |
 | `components/ScrollVideoBackground.jsx` | Vídeo controlado pela rolagem |
 | `components/HeroSection.jsx` | Chamada principal |
-| `components/SourcesStrip.jsx` | Faixa de normas |
 | `components/WhatWeAreSection.jsx` | "O que somos" |
 | `components/WhoWeAreSection.jsx` | "Quem somos" |
 | `components/ProductSection.jsx` | Cartões do produto |

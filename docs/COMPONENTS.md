@@ -10,7 +10,7 @@ Module de mesmo nome em `src/style/`.
 | Página | Rota | Autenticada | O que faz |
 |---|---|:---:|---|
 | `Home.jsx` | `/` | — | Landing page: vídeo de fundo, hero, seções institucionais e produto |
-| `About.jsx` | `/sobre` | — | O projeto, as equipes de 2026 e 2025 e a metodologia (`#metodologia`) |
+| `About.jsx` | `/sobre` | — | A equipe (2026, 2025 e a colaboração), com resumo e biografia em modal, e a metodologia (`#metodologia`) |
 | `Calculator.jsx` | `/calculadora` | — | Hospeda o assistente de cálculo em 3 passos |
 | `MySimulations.jsx` | `/minhas-simulacoes` | 🔒 | Histórico de simulações salvas |
 | `Support.jsx` | `/suporte` | — | Canais de contato e perguntas frequentes |
@@ -45,12 +45,19 @@ Qualquer URL desconhecida é redirecionada para `/` (`App.jsx`).
 |---|---|
 | `ScrollVideoBackground` | Vídeo de fundo em tela cheia cujo tempo é controlado pela rolagem da página. Props: `src`, `poster` |
 | `HeroSection` | Título, chamada e seta de rolagem |
-| `SourcesStrip` | Faixa com as normas e diretrizes que embasam a metodologia |
 | `WhatWeAreSection` | "O que somos" — rastreabilidade, eficiência e base normativa |
 | `WhoWeAreSection` | "Quem somos" — missão e valores |
 | `ProductSection` | Cartões das quatro frentes do produto |
 | `AccessCalculatorButton` | Chamada final para a calculadora |
 | `Reveal` | Envelope de animação: revela o conteúdo ao entrar na viewport. Props: `children`, `delay`, `className` |
+
+---
+
+## 👥 Página Sobre (`/sobre`)
+
+| Componente | Props | Descrição |
+|---|---|---|
+| `BioModal` | `pessoa`, `onClose` | Modal de tela cheia com a biografia completa do integrante (o card mostra só o resumo). Fecha com Esc, clique fora e no ✕; trava o scroll do body enquanto aberto e devolve o foco ao botão que o abriu |
 
 ---
 
