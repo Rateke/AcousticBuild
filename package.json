@@ -1,0 +1,11 @@
+{
+  "name": "acousticbuild",
+  "private": true,
+  "description": "Atalhos da raiz. O projeto do frontend vive em frontend/ — estes scripts só delegam para lá, para que `npm run dev` funcione tanto na raiz quanto dentro de frontend/.",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev --",
+    "build": "npm --prefix frontend run build --",
+    "lint": "npm --prefix frontend run lint --",
+    "preview": "npm --prefix frontend run preview --"
+  }
+}

@@ -1,0 +1,136 @@
+/* Modal de tela cheia com a biografia do integrante. Fica acima do Header (100)
+   e da Sidebar (overlay 200 / painel 300), que são os maiores z-index do site. */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: rgba(0, 12, 33, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.dialog {
+  position: relative;
+  z-index: 401;
+  width: 100%;
+  max-width: 900px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 44px 44px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  background: radial-gradient(120% 130% at 78% 8%, #093A80 0%, #00224F 45%, #001334 100%);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dialog {
+    animation: subir 0.24s ease-out;
+  }
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.close:hover {
+  border-color: rgba(47, 111, 255, 0.7);
+  background: rgba(47, 111, 255, 0.18);
+}
+
+.conteudo {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 34px;
+  align-items: start;
+}
+
+.foto {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 18px;
+  display: block;
+}
+
+.label {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #2F6FFF;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+.nome {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.paragrafo {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 14px;
+}
+
+.paragrafo:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 700px) {
+  .overlay {
+    padding: 16px;
+  }
+
+  .dialog {
+    padding: 54px 22px 28px;
+    max-height: 92vh;
+  }
+
+  .conteudo {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .foto {
+    height: 220px;
+  }
+
+  .nome {
+    font-size: 1.45rem;
+  }
+}
