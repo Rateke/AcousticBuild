@@ -24,6 +24,7 @@ import smtplib
 from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
 
+import config  # noqa: F401  (importar já carrega o .env antes das leituras abaixo)
 from auth import hash_password
 from models import TokenRedefinicaoSenha, User
 from sqlalchemy.orm import Session

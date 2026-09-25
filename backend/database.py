@@ -8,6 +8,7 @@
 """
 import os
 
+import config  # noqa: F401  (importar já carrega o .env antes das leituras abaixo)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 

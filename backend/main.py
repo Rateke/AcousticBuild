@@ -1,7 +1,6 @@
-import os
-
 from acustica import router as acustica_router
 from catalogo import router as catalogo_router
+from config import IS_VERCEL  # importa primeiro: carrega o .env antes de tudo
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import router
@@ -15,7 +14,7 @@ seed_database()
 # Na Vercel o site e a API dividem o mesmo domínio e a API atende em /api. A
 # Vercel entrega o caminho com o /api, então as rotas precisam existir com o
 # prefixo. No computador a API continua sem prefixo, em localhost:8000.
-PREFIXO_API = "/api" if os.getenv("VERCEL") else ""
+PREFIXO_API = "/api" if IS_VERCEL else ""
 
 
 def montar_app(prefixo: str = PREFIXO_API) -> FastAPI:

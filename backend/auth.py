@@ -1,6 +1,6 @@
-import os
 from datetime import datetime, timedelta, timezone
 
+from config import SECRET_KEY
 from database import get_db
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -9,10 +9,9 @@ from models import User
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
-# O repositório é público: com a chave fixa no código, qualquer pessoa consegue
-# assinar um token de login válido para qualquer conta. Em produção a chave TEM
-# que vir do ambiente; o valor abaixo só existe para o desenvolvimento local.
-SECRET_KEY = os.getenv("SECRET_KEY", "acousticbuild-chave-apenas-desenvolvimento")
+# SECRET_KEY vem de config.py, que por sua vez lê do .env (dev) ou das
+# variáveis de ambiente reais configuradas na Vercel (produção). Nunca fica
+# fixa aqui no código.
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 
