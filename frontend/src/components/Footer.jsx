@@ -37,9 +37,7 @@ export default function Footer() {
               <a href="https://www.instagram.com/ic_floripa/" className={styles.socialLink} aria-label="Instagram">
                 <IconInstagram size={20} color="#FFFFFF" />
               </a>
-              <a href={`mailto:${EMAIL_CONTATO}`} className={styles.socialLink} aria-label="E-mail">
-                <IconMail size={20} color="#FFFFFF" />
-              </a>
+              
             </div>
           </div>
 

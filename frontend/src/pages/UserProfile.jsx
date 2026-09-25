@@ -90,7 +90,14 @@ export default function UserProfile() {
   // Tela de Edição
   return (
     <div className={styles.container}>
-      <Link to="/" className={styles.backLink}>← Home</Link>
+      <button
+  type="button"
+  onClick={() => setView('view')}
+  className={styles.backLink}
+  style={{ background: 'none', border: 'none', cursor: 'pointer', font: 'inherit' }}
+>
+  ← Voltar
+</button>
       <div className={styles.profileCard}>
         <h1 className={styles.editTitle}>EDITAR PERFIL</h1>
 

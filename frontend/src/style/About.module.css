@@ -268,7 +268,9 @@
 .fontesGrid {
   margin-top: 40px;
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr;
+  /* Três colunas iguais: a ordem dos cards é a de FONT_GROUPS — diretrizes,
+     leituras e, por último, normas. */
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 24px;
   align-items: start;
 }

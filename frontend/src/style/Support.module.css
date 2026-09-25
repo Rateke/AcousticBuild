@@ -42,10 +42,9 @@
 /* Lado escuro — Central de Suporte + Fale Conosco */
 .panel {
   flex: 1;
-  background:
-    linear-gradient(180deg, rgba(1, 27, 63, 0.6) 0%, rgba(1, 27, 63, 0.86) 62%, rgba(1, 27, 63, 0.95) 100%),
-    url('../assets/bg-suporte.jpg') right top / 175% auto no-repeat,
-    #011B3F;
+  /* Painel escuro sólido, sem imagem de fundo — mesma cor dos painéis de
+     Login e Register (#011B3F). */
+  background: #011B3F;
   display: flex;
   align-items: center;
   justify-content: center;

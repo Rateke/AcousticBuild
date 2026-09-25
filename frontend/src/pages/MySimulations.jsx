@@ -28,7 +28,7 @@ export default function MySimulations() {
 
   return (
     <div className={styles.container}>
-      <Link to="/" className={styles.backLink}>← Home</Link>
+     <Link to="/profile" className={styles.backLink}>← Voltar</Link>
 
       <div className={styles.card}>
         <h1 className={styles.title}>MINHAS SIMULAÇÕES</h1>

@@ -89,6 +89,20 @@ const EQUIPES = [
 
 const FONT_GROUPS = [
   {
+    title: 'Diretrizes internacionais',
+    items: [
+      { ref: 'WHO, 2018', desc: 'Environmental Noise Guidelines for the European Region.' },
+    ],
+  },
+  {
+    title: 'Literatura científica',
+    items: [
+      { ref: 'GERGES, S. N. Y.', desc: 'Ruído: fundamentos e controle.' },
+      { ref: 'TROCHIDIS & PAPANIKOLAOU, 1984', desc: 'Transmissão sonora por frestas e aberturas.' },
+      { ref: 'ASAKURA et al., 2009', desc: 'Transmissão por aberturas tipo fresta e redução por materiais porosos.' },
+    ],
+  },
+  {
     title: 'Normas técnicas',
     items: [
       { ref: 'ABNT NBR 10152:2017 (corrigida 2020)', desc: 'Níveis de pressão sonora em ambientes internos.' },
@@ -102,20 +116,6 @@ const FONT_GROUPS = [
       { ref: 'ISO 3382-2:2008', desc: 'Medição de tempo de reverberação.' },
       { ref: 'ISO 12999-1:2020', desc: 'Incerteza de medição em acústica de edificações.' },
       { ref: 'ANSI/ASA S12.60-2010/Part 1', desc: 'Critérios acústicos para escolas.' },
-    ],
-  },
-  {
-    title: 'Diretrizes internacionais',
-    items: [
-      { ref: 'WHO, 2018', desc: 'Environmental Noise Guidelines for the European Region.' },
-    ],
-  },
-  {
-    title: 'Literatura científica',
-    items: [
-      { ref: 'GERGES, S. N. Y.', desc: 'Ruído: fundamentos e controle.' },
-      { ref: 'TROCHIDIS & PAPANIKOLAOU, 1984', desc: 'Transmissão sonora por frestas e aberturas.' },
-      { ref: 'ASAKURA et al., 2009', desc: 'Transmissão por aberturas tipo fresta e redução por materiais porosos.' },
     ],
   },
 ];
@@ -233,9 +233,9 @@ export default function About() {
           <span className={styles.label}>Metodologia</span>
           <h2 className={styles.sectionTitle}>Em que os cálculos se baseiam</h2>
           <p>
-            Cada cálculo da plataforma é fundamentado em normas técnicas e literatura científica
-            reconhecida. Abaixo estão as principais referências usadas no motor de cálculo e nos
-            critérios normativos de classificação.
+            Cada cálculo da plataforma é fundamentado em diretrizes internacionais, literatura
+            científica e normas técnicas reconhecidas. Abaixo estão as principais referências usadas
+            no motor de cálculo e nos critérios normativos de classificação.
           </p>
         </Reveal>
 
