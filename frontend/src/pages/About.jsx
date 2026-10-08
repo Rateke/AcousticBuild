@@ -97,9 +97,7 @@ const FONT_GROUPS = [
   {
     title: 'Literatura científica',
     items: [
-      { ref: 'GERGES, S. N. Y.', desc: 'Ruído: fundamentos e controle.' },
-      { ref: 'TROCHIDIS & PAPANIKOLAOU, 1984', desc: 'Transmissão sonora por frestas e aberturas.' },
-      { ref: 'ASAKURA et al., 2009', desc: 'Transmissão por aberturas tipo fresta e redução por materiais porosos.' },
+      { ref: 'GERGES, S. N. Y., 2000', desc: 'Ruído: fundamentos e controle. 2. ed. Florianópolis: NR Editora.' },
     ],
   },
   {

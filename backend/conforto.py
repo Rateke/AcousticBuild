@@ -9,7 +9,8 @@ Duas camadas complementares ao julgamento normativo da NBR 15575:
 
 2. Tradução perceptiva — a escala em decibéis é logarítmica: uma redução de
    10 dB corresponde a aproximadamente metade do volume percebido pelo ouvido
-   humano (GERGES, "Ruído: fundamentos e controle").
+   humano (GERGES, S. N. Y. "Ruído: fundamentos e controle". 2. ed.
+   Florianópolis: NR Editora, 2000).
 
 IMPORTANTE: os valores da NBR 10152 são LAeq de ruído de fundo do ambiente.
 O nível calculado aqui vem de uma fonte específica no ambiente emissor e não é

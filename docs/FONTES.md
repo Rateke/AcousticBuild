@@ -156,24 +156,25 @@ Massa específica do concreto estrutural de densidade normal.
 
 ## 4. Literatura científica
 
-**GERGES, Samir N. Y.** *Ruído: fundamentos e controle.* Florianópolis.
+**GERGES, Samir N. Y.** *Ruído: fundamentos e controle.* 2. ed. Florianópolis:
+NR Editora, 2000. ISBN 85-87550-02-0.
 Referência de língua portuguesa para os fundamentos: lei da massa, frequência crítica,
 percepção logarítmica do som e a regra prática de que ~10 dB de diferença correspondem à
 sensação de metade (ou dobro) do volume — usada em
 [`backend/conforto.py`](../backend/conforto.py) para traduzir decibéis em linguagem comum.
+É a única referência de literatura citada pela plataforma: tudo o mais vem de norma
+técnica, de documento setorial identificado ou é autoria própria declarada como tal.
 
-**TROCHIDIS, A.; PAPANIKOLAOU, A.** (1984). Transmissão sonora por frestas e aberturas.
-Fundamenta as recomendações de vedação perimetral e tratamento de frestas: por que uma
-fresta pequena derruba desproporcionalmente o isolamento de uma parede boa.
-
-**ASAKURA, T. et al.** (2009). Transmissão por aberturas tipo fresta e redução por
-materiais porosos.
-Fundamenta as recomendações de preenchimento de cavidade e uso de materiais porosos.
-
-> ⚠️ **Para a equipe:** estas três referências estão citadas no projeto em forma
-> abreviada. Antes de submeter artigo ou relatório, complete os dados bibliográficos
-> (editora e ano da edição consultada de Gerges; periódico, volume, páginas e DOI dos dois
-> artigos) no padrão ABNT NBR 6023. Não preencha de memória — confira na fonte.
+> ℹ️ **Para a equipe:** autor, título, editora e ISBN estão confirmados em registros de
+> catálogo de biblioteca. Confirme a **edição e o número de páginas no exemplar que vocês
+> realmente consultarem** antes de submeter artigo ou relatório: há registros tanto para a
+> 1ª edição (1992) quanto para a 2ª (2000), ambas pela NR Editora, em Florianópolis.
+>
+> As recomendações da plataforma sobre vedação de frestas e preenchimento de cavidade
+> (em [`backend/suggestions.py`](../backend/suggestions.py)) **não** têm referência
+> bibliográfica atribuída: são boa prática construtiva consolidada, apresentadas como
+> autoria própria. Se forem usadas em texto científico, precisam de uma fonte lida e
+> verificada — não de uma citação preenchida de memória.
 
 ---
 
@@ -315,9 +316,7 @@ Para copiar em pôster, artigo ou apresentação:
 - ABNT NBR 6118 — Projeto de estruturas de concreto
 
 **Literatura**
-- GERGES, S. N. Y. — *Ruído: fundamentos e controle*
-- TROCHIDIS, A.; PAPANIKOLAOU, A. (1984)
-- ASAKURA, T. et al. (2009)
+- GERGES, S. N. Y. — *Ruído: fundamentos e controle* (2. ed., Florianópolis: NR Editora, 2000)
 
 ---
 
