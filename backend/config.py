@@ -10,6 +10,12 @@ banco, credenciais de e-mail) é lido daqui — nunca fixo no código-fonte.
   variáveis são cadastradas em Settings → Environment Variables, e chegam
   aqui exatamente da mesma forma (`os.getenv`), sem mudar nada no código.
 
+Nenhuma variável ausente derruba a aplicação: cada uma tem um padrão seguro
+e declarado. Sem SECRET_KEY, a chave é sorteada e os logins caem a cada
+reinício. Sem DATABASE_URL, o banco é um SQLite temporário. Sem SMTP_*, o
+link de recuperação de senha é impresso no log em vez de enviado por
+e-mail. Em todos os casos o aviso aparece no log do servidor.
+
 Importar este módulo é o que garante que o `.env` seja carregado antes de
 qualquer outro módulo (database.py, auth.py, recuperacao.py) ler uma
 variável de ambiente — por isso ele é importado antes dos outros em main.py.
@@ -29,27 +35,41 @@ load_dotenv()
 IS_VERCEL = bool(os.getenv("VERCEL"))
 
 
+# True quando a chave desta execução foi sorteada em vez de configurada.
+# Quem precisar avisar o usuário de que a sessão pode cair consulta isto.
+CHAVE_EFEMERA = False
+
+
 def _carregar_secret_key() -> str:
+    """Chave de assinatura dos tokens de login.
+
+    Configurada no ambiente, é estável e as sessões sobrevivem a reinícios.
+    Ausente, é SORTEADA a cada execução — inclusive em produção.
+
+    Sortear não é a insegurança que o código precisava evitar: o problema
+    era a chave fixa e pública no repositório, que deixaria qualquer pessoa
+    assinar um token válido para qualquer conta. Uma chave sorteada na hora
+    ninguém conhece, logo ninguém forja. O que se perde é permanecer logado:
+    ao hibernar, o servidor sorteia outra e os tokens antigos deixam de
+    valer. Antes isto era um erro de import, o que derrubava a API inteira
+    — incluindo a calculadora, que não precisa de login — para proteger um
+    cadastro que, sem DATABASE_URL, já é apagado junto com o /tmp.
+    """
+    global CHAVE_EFEMERA
     chave = os.getenv("SECRET_KEY")
     if chave:
         return chave
 
-    if IS_VERCEL:
-        # Em produção não existe fallback: sem SECRET_KEY configurada, o
-        # deploy não deve nem subir — uma chave pública e fixa no código
-        # permitiria forjar um login válido para qualquer conta.
-        raise RuntimeError(
-            "SECRET_KEY não configurada. Cadastre essa variável em "
-            "Settings → Environment Variables no painel da Vercel."
-        )
-
-    # Em desenvolvimento local, gera uma chave aleatória a cada execução em
-    # vez de usar um valor fixo e público no código-fonte. Definir SECRET_KEY
-    # no seu .env evita que sessões sejam derrubadas a cada reinício.
+    CHAVE_EFEMERA = True
+    onde = (
+        "nas variáveis de ambiente da Vercel" if IS_VERCEL
+        else "no backend/.env (veja backend/.env.example)"
+    )
     print(
-        "[config] SECRET_KEY não definida no .env — usando uma chave "
-        "aleatória só para esta execução (logins serão invalidados ao "
-        "reiniciar o servidor). Veja backend/.env.example.",
+        "[config] SECRET_KEY não definida — sorteando uma chave aleatória só "
+        "para esta execução. A API funciona normalmente; o que cai são os "
+        "logins a cada reinício do servidor. Para manter as sessões, defina "
+        "SECRET_KEY " + onde + ".",
         flush=True,
     )
     return secrets.token_hex(32)

@@ -145,7 +145,7 @@ O `vercel.json` já deixa o projeto pronto para rodar inteiro na Vercel: o site 
 
 | Variável | Obrigatória | Para quê |
 |---|:---:|---|
-| `SECRET_KEY` | **sim** | Assina os logins. Use um texto longo e aleatório — sem ela, qualquer pessoa que leia o código consegue forjar um login. |
+| `SECRET_KEY` | recomendada | Assina os logins. Use um texto longo e aleatório. Sem ela o site funciona igual, mas a chave é sorteada a cada reinício do servidor e todo mundo é deslogado junto. O que **nunca** se deve fazer é fixar uma chave no código: o repositório é público, e quem a lesse forjaria um login para qualquer conta. |
 | `DATABASE_URL` | recomendada | Banco Postgres. Sem ele a calculadora funciona, mas contas e histórico se perdem quando o servidor reinicia. |
 | `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD` | não | Envio do e-mail de recuperação de senha. |
 
