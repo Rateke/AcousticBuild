@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IconInstagram, IconMail, IconSend } from './IconSet';
+import { IconInstagram, IconSend } from './IconSet';
 import Logo from './Logo';
 import styles from '../style/Footer.module.css';
 

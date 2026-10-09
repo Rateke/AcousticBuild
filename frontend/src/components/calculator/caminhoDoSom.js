@@ -116,7 +116,9 @@ function caminhoAereo(resultado) {
         ? `Pela lei da massa, a parede tem ${refNome} estimado de ${fmtDb(refValor)} dB (estimativa, não é ensaio). `
         : resultado.confiabilidade === 'informado_usuario'
           ? `O ${refNome} informado da parede é ${fmtDb(refValor)} dB. `
-          : `Em laboratório, a parede tem ${refNome} de ${fmtDb(refValor)} dB. `;
+          : resultado.confiabilidade === 'referencia_literatura'
+            ? `O ${refNome} de referência dessa parede é ${fmtDb(refValor)} dB (valor de catálogo, não é ensaio deste sistema). `
+            : `Em laboratório, a parede tem ${refNome} de ${fmtDb(refValor)} dB. `;
     nota = `${abertura}No seu ambiente ela barra ${fmtDb(barra)} dB, porque o tamanho da parede e o acabamento do cômodo mudam o resultado. ${fecho}`;
   }
   if (d.l1_padrao) {

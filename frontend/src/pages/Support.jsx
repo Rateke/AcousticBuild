@@ -59,7 +59,7 @@ const faqs = [
   },
   {
     q: 'De onde vêm os números de cada material?',
-    a: 'Sempre que existe ensaio de laboratório documentado, a plataforma usa o valor medido e mostra a fonte. Quando não existe, ela avisa: se todas as camadas forem rígidas, o isolamento é estimado pela lei da massa e rotulado como estimativa; se houver camada resiliente (lã mineral, manta), a plataforma se recusa a inventar o número e pede um valor de ensaio.',
+    a: 'Cada valor do catálogo declara a sua procedência, e o rótulo acompanha: as duas paredes drywall vêm da faixa publicada no manual setorial da Associação Brasileira do Drywall; os outros oito sistemas são valores de referência de literatura técnica, rotulados como tal justamente porque ainda não têm relatório de ensaio que se possa pedir e ler. As densidades vêm de norma (NBR 15220-2, NBR 6118, NBR 14715) ou são derivadas da massa declarada, sempre dizendo qual das duas. Quando não existe valor para a composição, a plataforma avisa: se todas as camadas forem rígidas, estima pela lei da massa e rotula como estimativa; se houver camada resiliente (lã mineral, manta), se recusa a inventar o número e pede um valor medido.',
   },
   {
     q: 'O resultado substitui um laudo acústico?',

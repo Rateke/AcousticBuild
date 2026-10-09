@@ -180,70 +180,139 @@ técnica, de documento setorial identificado ou é autoria própria declarada co
 
 ## 5. Dado: catálogo de sistemas construtivos
 
-Dez sistemas com desempenho acústico documentado. Nenhum valor foi estimado; todos vêm de
-ensaio ou de tabela normativa.
+Dez sistemas construtivos. **Nenhum deles tem, hoje, relatório de ensaio que se possa
+pedir e ler** — e o catálogo passou a dizer isso em vez de esconder. As duas paredes
+drywall têm fonte pública rastreável; os outros oito são valores de referência de
+literatura técnica, rotulados como tal no banco, na API e na tela.
 
-| Código | Sistema | Desempenho | Fonte do dado |
+> ⚠️ **Por que esta tabela mudou — leia antes de citar qualquer coisa daqui.**
+> A versão anterior atribuía cada valor a um relatório de ensaio específico (IPT
+> nº 1 035 812-205, IPT nº 994 210, Ficha ALV-CER-02 da ProAcústica, Placo/IPT
+> nº 1 042 115, Tarkett/IPT nº 1 028 411, Ficha FLU-01 da ProAcústica) e as duas lajes a
+> tabelas de um "Anexo A" da NBR 15575-3. **Nenhuma dessas referências pôde ser localizada
+> ou confirmada.** Número de relatório que ninguém acha não é fonte: é o risco de a banca
+> descobrir antes de vocês. Os valores numéricos foram mantidos, porque são compatíveis
+> com a ordem de grandeza da literatura da área; o que mudou foi o rótulo, que agora conta
+> a verdade. Trocar um rótulo falso por um rótulo honesto enfraquece a tabela e fortalece
+> o projeto.
+
+| Código | Sistema | Desempenho | Procedência do valor |
 |---|---|---|---|
-| `PAR-CER-014` | Alvenaria bloco cerâmico 14 cm + argamassa 1,5 cm | $R_w$ = 40 dB | IPT, Relatório de Ensaio nº 1 035 812-205 |
-| `PAR-CER-019` | Alvenaria bloco cerâmico 19 cm + argamassa 1,5 cm | $R_w$ = 44 dB | Catálogo ProAcústica, Ficha ALV-CER-02 |
-| `PAR-CON-010` | Parede de concreto maciço 10 cm | $R_w$ = 45 dB | IPT, Relatório de Ensaio nº 994 210 |
-| `PAR-CON-015` | Parede de concreto maciço 15 cm | $R_w$ = 49 dB | IPT, Relatório Técnico nº 1 012 344-205 |
-| `PAR-DRY-073` | Drywall 73/48 — 1 placa ST 12,5 mm/face + lã 50 mm | $R_w$ = 43 dB | Manual Knauf Drywall / Relatório IBRACON 2019 |
-| `PAR-DRY-098` | Drywall 98/48 — 2 placas ST 12,5 mm/face + lã 50 mm | $R_w$ = 51 dB | Placo do Brasil / IPT nº 1 042 115 |
-| `LAJ-MAC-010` | Laje maciça 10 cm, sem atenuador | $R_w$ = 45 dB · $L_{n,w}$ = 80 dB | ABNT NBR 15575-3:2013, Anexo A, Tabelas A.1 e A.2 |
-| `LAJ-MAC-014` | Laje maciça 14 cm, sem atenuador | $R_w$ = 49 dB · $L_{n,w}$ = 76 dB | ABNT NBR 15575-3:2013, Anexo A, Tabelas A.1 e A.2 |
-| `LAJ-FLU-014` | Laje 14 cm + manta 5 mm + contrapiso 5 cm | $R_w$ = 52 dB · $L_{n,w}$ = 56 dB ($\Delta L_w$ = 20 dB) | ProAcústica, Ficha FLU-01 / Ensaio IBRACON |
-| `LAJ-VIN-014` | Laje 14 cm + contrapiso 3 cm + vinílico 2 mm | $R_w$ = 50 dB · $L_{n,w}$ = 68 dB ($\Delta L_w$ = 8 dB) | Ficha Técnica Tarkett Brasil / IPT nº 1 028 411 |
+| `PAR-CER-014` | Alvenaria bloco cerâmico 14 cm + argamassa 1,5 cm | $R_w$ = 40 dB | Referência de literatura — fonte a confirmar |
+| `PAR-CER-019` | Alvenaria bloco cerâmico 19 cm + argamassa 1,5 cm | $R_w$ = 44 dB | Referência de literatura — fonte a confirmar |
+| `PAR-CON-010` | Parede de concreto maciço 10 cm | $R_w$ = 45 dB | Referência de literatura — fonte a confirmar |
+| `PAR-CON-015` | Parede de concreto maciço 15 cm | $R_w$ = 49 dB | Referência de literatura — fonte a confirmar |
+| `PAR-DRY-073` | Drywall 73/48 — 1 placa ST 12,5 mm/face + lã 50 mm | $R_w$ = 43 dB | ✅ *Desempenho Acústico em Sistemas Drywall*, 3. ed., Associação Brasileira do Drywall (rev. téc. ProAcústica) — faixa publicada de **40 a 44 dB** |
+| `PAR-DRY-098` | Drywall 98/48 — 2 placas ST 12,5 mm/face + lã 50 mm | $R_w$ = 51 dB | ✅ Mesmo manual — faixa publicada de **50 a 54 dB** |
+| `LAJ-MAC-010` | Laje maciça 10 cm, sem atenuador | $R_w$ = 45 dB · $L_{n,w}$ = 80 dB | Referência de literatura — fonte a confirmar (atribuição ao "Anexo A" da NBR 15575-3 retirada) |
+| `LAJ-MAC-014` | Laje maciça 14 cm, sem atenuador | $R_w$ = 49 dB · $L_{n,w}$ = 76 dB | Referência de literatura — fonte a confirmar (idem) |
+| `LAJ-FLU-014` | Laje 14 cm + manta 5 mm + contrapiso 5 cm | $R_w$ = 52 dB · $L_{n,w}$ = 56 dB ($\Delta L_w$ = 20 dB) | Referência de literatura — fonte a confirmar |
+| `LAJ-VIN-014` | Laje 14 cm + contrapiso 3 cm + vinílico 2 mm | $R_w$ = 50 dB · $L_{n,w}$ = 68 dB ($\Delta L_w$ = 8 dB) | Referência de literatura — fonte a confirmar |
 
-Cada laje tem dois registros de dado acústico — um para ruído aéreo ($R_w$, Tabela A.1) e
-outro para ruído de impacto ($L_{n,w}$, Tabela A.2) — porque são fenômenos distintos,
-julgados por partes diferentes da norma.
+Cada laje tem dois registros de dado acústico — um para ruído aéreo ($R_w$) e outro para
+ruído de impacto ($L_{n,w}$) — porque são fenômenos distintos, julgados por partes
+diferentes da norma.
 
-Tudo isso está em [`backend/seed.py`](../backend/seed.py), com os campos `fonte` e
-`norma_ensaio` gravados em cada registro — é o que a interface exibe no cartão do sistema.
+**Sobre o $\Delta L_w$ das duas últimas lajes.** O $\Delta L_w$ é a melhoria que o
+revestimento traz *sobre a laje nua*, e os três registros são coerentes entre si: laje de
+14 cm nua = 76 dB; com piso flutuante, $76 - 20 = 56$ dB; com vinílico colado,
+$76 - 8 = 68$ dB. Como o $L_{n,w}$ gravado **já inclui** essa melhoria, o campo
+`delta_lw` é informativo e **não entra na conta** — subtraí-lo outra vez contaria o
+revestimento duas vezes. Isso está anotado no código, em
+[`backend/models.py`](../backend/models.py) e em [`backend/seed.py`](../backend/seed.py),
+justamente para que ninguém "conserte" isso no futuro.
+
+### Como transformar isto em fonte de verdade
+
+Em ordem de esforço, do menor para o maior:
+
+1. **Pedir ao fabricante** o relatório de ensaio do sistema que vocês quiserem citar
+   (Knauf, Placo, Saint-Gobain, Tarkett, fabricantes de blocos). Eles costumam enviar o
+   PDF do laboratório para pedido de estudante. Chegando o PDF, o registro muda de
+   `referencia_literatura` para `ensaio_laboratorio` e a fonte passa a ser o número do
+   relatório — que aí existe de fato.
+2. **Artigos de congresso brasileiros** (ENTAC/ANTAC, SOBRAC) têm ensaios de laje maciça e
+   de alvenaria com norma declarada. Valem como fonte **desde que alguém do grupo abra o
+   PDF e leia** — citar pelo resumo do buscador é repetir o erro que esta seção corrigiu.
+3. **Comunicações técnicas do IPT** publicadas abertamente. Atenção ao escopo: a que
+   localizamos (nº 175839, de 2018) trata de **blocos de concreto**, não de bloco cerâmico
+   nem de laje — citá-la para outro sistema seria usá-la fora do que ela mediu.
+
+Tudo isso está em [`backend/seed.py`](../backend/seed.py), nos campos `fonte`,
+`condicao_ensaio` e `confiabilidade` de cada registro — é o que a interface exibe no
+cartão do sistema, sob o rótulo "Procedência do valor".
 
 ---
 
 ## 5.1 Dado: densidade dos materiais
 
 Quando não existe ensaio para a composição, a estimativa pela lei da massa se apoia
-**inteiramente** nestas densidades. Por isso cada uma tem fonte obrigatória — não há
-material cadastrado sem origem declarada.
+**inteiramente** nestas densidades. Por isso cada uma declara não só a fonte, mas o
+**tipo** de fonte: valor de norma, valor derivado de uma massa declarada, ou valor típico
+a confirmar.
 
-| # | Material | $\rho$ (kg/m³) | Fonte |
+> ⚠️ **Auditoria de outubro de 2026 — três erros corrigidos.** A tabela anterior tinha
+> valores que contrariavam a própria norma citada ou o resto do banco:
+>
+> 1. **Concreto armado: 2400 → 2500 kg/m³.** A NBR 6118, item 8.2.2, manda usar
+>    2400 kg/m³ para concreto **simples** e 2500 kg/m³ para concreto **armado**. O
+>    material é armado (laje e parede estrutural), então 2400 contrariava a norma que
+>    estava citada ao lado e **subestimava a massa** — que é exatamente o que a lei da
+>    massa usa para prever isolamento. As massas das variações e dos sistemas de concreto
+>    foram recalculadas (ver tabela seguinte).
+> 2. **Bloco cerâmico: 1200 → 780 kg/m³.** Com 1200 kg/m³, a espessura de 14 cm daria
+>    168 kg/m² — 53% acima dos 110 kg/m² que a própria variação do bloco declarava. O
+>    campo guarda a densidade **aparente** do bloco vazado (barro + vazios), não a do
+>    barro cozido maciço, que é a faixa de 1000 a 2000 kg/m³ da NBR 15220-2.
+> 3. **Placa de gesso: 800 → 760 kg/m³.** 800 kg/m³ × 12,5 mm = 10,0 kg/m², mas a chapa
+>    declara 9,5 kg/m². Agora os dois campos contam a mesma história.
+>
+> Fontes de catálogo comercial sem edição nem data ("Catálogo Técnico Saint-Gobain",
+> "Ficha Técnica Tarkett") foram substituídas por uma declaração honesta de valor típico
+> a confirmar na ficha do produto que o projeto realmente especificar.
+
+| # | Material | $\rho$ (kg/m³) | Procedência |
 |---|---|---:|---|
-| 1 | Bloco cerâmico de vedação | 1200 | ABNT NBR 15220-2 / Manual da Cerâmica Vermelha |
-| 2 | Bloco de concreto vazado | 1400 | ABNT NBR 15220-2 |
-| 3 | Argamassa de cimento e areia | 1900 | ABNT NBR 15220-2 |
-| 4 | Concreto armado maciço | 2400 | ABNT NBR 6118 / ABNT NBR 15220-2 |
-| 5 | Placa de gesso acartonado (drywall) | 800 | ABNT NBR 14715 |
-| 6 | Lã de vidro para isolamento acústico | 14 | Catálogo Técnico Saint-Gobain / ISOVER |
-| 7 | Manta acústica de polietileno expandido | 30 | Catálogo ProAcústica de Sistemas de Piso |
-| 8 | Contrapiso regularizado de argamassa | 2000 | ABNT NBR 15220-2 |
-| 9 | Piso vinílico em réguas (colado) | 1300 | Ficha Técnica Tarkett Brasil |
-| 10 | Piso cerâmico / porcelanato | 2200 | ABNT NBR 15220-2 |
+| 1 | Bloco cerâmico de vedação | 780 | Derivada dos 110 kg/m² da variação de 14 cm (autoria própria: $110 \div 0,14$) |
+| 2 | Bloco de concreto vazado | 1400 | Valor típico de densidade aparente — a confirmar na ficha do bloco |
+| 3 | Argamassa de cimento e areia | 1900 | ABNT NBR 15220-2, Anexo B — faixa 1800 a 2100; adotado o centro |
+| 4 | Concreto armado maciço | **2500** | ABNT NBR 6118, item 8.2.2 — concreto armado |
+| 5 | Placa de gesso acartonado (drywall) | **760** | Derivada dos 9,5 kg/m² da chapa ST 12,5 mm (autoria própria) |
+| 6 | Lã de vidro para isolamento acústico | 14 | Valor típico (faixa 10 a 20) — a confirmar na ficha do produto |
+| 7 | Manta acústica de polietileno expandido | 30 | Valor típico (faixa 25 a 35) — a confirmar na ficha do produto |
+| 8 | Contrapiso regularizado de argamassa | 2000 | ABNT NBR 15220-2, Anexo B — faixa 1800 a 2100 |
+| 9 | Piso vinílico em réguas (colado) | 1300 | Valor típico de régua LVT — a confirmar na ficha do produto |
+| 10 | Piso cerâmico / porcelanato | 2200 | Valor típico (faixa 2000 a 2400) — a confirmar; a faixa da NBR 15220-2 para "cerâmica" é de tijolo e telha |
+
+A lã de vidro e a manta aparecem com densidade baixíssima de propósito: **o efeito
+acústico delas não vem da massa**. A lã atua por absorção dentro da cavidade e a manta
+por elasticidade (desacoplamento). Na soma da massa superficial, as duas são desprezíveis.
 
 ### Variações dimensionais
 
-Alguns materiais têm massa superficial ($m'$) medida diretamente para uma espessura
-comercial específica, em vez de calculada por $\rho \times e$. Nesses casos vale o valor
-tabelado, com sua própria fonte:
+Alguns materiais têm massa superficial ($m'$) declarada diretamente para uma espessura
+comercial, em vez de calculada por $\rho \times e$ — e quando há variação, é ela que o
+cálculo usa. Nesses casos vale o valor tabelado, com sua própria procedência:
 
-| Material | Variação | $e$ | $m'$ (kg/m²) | Fonte |
+| Material | Variação | $e$ | $m'$ (kg/m²) | Procedência |
 |---|---|---:|---:|---|
-| Bloco cerâmico | 14 cm | 0,14 m | 110 | ABNT NBR 15220-2 / ProAcústica |
-| Bloco cerâmico | 19 cm | 0,19 m | 145 | ABNT NBR 15220-2 / ProAcústica |
-| Argamassa | 1,5 cm | 0,015 m | 28,5 | ABNT NBR 15220-2 |
-| Concreto armado | 10 cm | 0,10 m | 240 | ABNT NBR 15220-2 |
-| Concreto armado | 14 cm | 0,14 m | 336 | ABNT NBR 15220-2 |
-| Concreto armado | 15 cm | 0,15 m | 360 | ABNT NBR 15220-2 |
-| Placa de gesso | 12,5 mm ST | 0,0125 m | 9,5 | ABNT NBR 14715 |
-| Lã de vidro | 50 mm | 0,05 m | 0,7 | Catálogo ISOVER |
-| Manta acústica | 5 mm | 0,005 m | 0,15 | Catálogo ProAcústica |
-| Contrapiso | 3 cm | 0,03 m | 60 | ABNT NBR 15220-2 |
-| Contrapiso | 5 cm | 0,05 m | 100 | ABNT NBR 15220-2 |
-| Piso vinílico | 2 mm | 0,002 m | 2,6 | Ficha Técnica Tarkett |
+| Bloco cerâmico | 14 cm | 0,14 m | 110 | Valor típico com juntas — confirmar pesando o bloco especificado |
+| Bloco cerâmico | 19 cm | 0,19 m | 145 | Valor típico com juntas — confirmar pesando o bloco especificado |
+| Argamassa | 1,5 cm | 0,015 m | 28,5 | NBR 15220-2 ($1900 \times 0,015$) |
+| Concreto armado | 10 cm | 0,10 m | **250** | NBR 6118, item 8.2.2 ($2500 \times 0,10$) |
+| Concreto armado | 14 cm | 0,14 m | **350** | NBR 6118, item 8.2.2 ($2500 \times 0,14$) |
+| Concreto armado | 15 cm | 0,15 m | **375** | NBR 6118, item 8.2.2 ($2500 \times 0,15$) |
+| Placa de gesso | 12,5 mm ST | 0,0125 m | 9,5 | Massa típica da chapa ST (faixa 9 a 10) — confirmar no fabricante |
+| Lã de vidro | 50 mm | 0,05 m | 0,7 | Derivada de 14 kg/m³ (autoria própria) |
+| Manta acústica | 5 mm | 0,005 m | 0,15 | Derivada de 30 kg/m³ (autoria própria) |
+| Contrapiso | 3 cm | 0,03 m | 60 | NBR 15220-2 ($2000 \times 0,03$) |
+| Contrapiso | 5 cm | 0,05 m | 100 | NBR 15220-2 ($2000 \times 0,05$) |
+| Piso vinílico | 2 mm | 0,002 m | 2,6 | Derivada de 1300 kg/m³ (autoria própria) — confirmar na ficha |
+
+Com o concreto a 2500 kg/m³, as massas dos sistemas que o usam subiram: parede de 10 cm
+240 → 250 kg/m², parede de 15 cm 360 → 375, laje de 14 cm 336 → 350, piso flutuante
+436,15 → 450,15 e laje com vinílico 398,6 → 412,6 kg/m². Isso **muda resultados**: na
+estimativa pela lei da massa, cada 4% de massa a mais vale cerca de 0,35 dB.
 
 > **Sobre a NBR 15220-2:** é uma norma de *desempenho térmico*. O que se usa dela aqui é
 > apenas a tabela de propriedades físicas de materiais de construção do Anexo B — massa

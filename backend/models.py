@@ -132,12 +132,21 @@ class DadoAcustico(Base):
     ln               = Column(Float, nullable=True)    # Nível de impacto Ln pontual [dB]
     ln_w             = Column(Float, nullable=True)    # Nível de impacto ponderado laboratório Ln,w [dB]
     l_nt_w           = Column(Float, nullable=True)    # Nível de impacto campo L'nT,w [dB]
-    delta_lw         = Column(Float, nullable=True)    # Redução atenuada do impacto ΔLw [dB]
+    # ΔLw é a melhoria de impacto do revestimento SOBRE a laje nua. No catálogo
+    # o ln_w já inclui essa melhoria (laje nua 76 dB - 20 dB da manta = 56 dB):
+    # o campo é informativo e NÃO entra na conta, senão o revestimento seria
+    # contado duas vezes.
+    delta_lw         = Column(Float, nullable=True)    # Melhoria do revestimento ΔLw [dB]
     rigidez_dinamica = Column(Float, nullable=True)    # Rigidez dinâmica s' [MN/m³]
     norma_ensaio     = Column(String, nullable=True)   # Ex: "ABNT NBR ISO 10140-2 / ISO 717-1"
     condicao_ensaio  = Column(Text, nullable=True)     # Ex: "Ensaio laboratorial sem transmissão marginal"
-    confiabilidade   = Column(String, default="documentado")  # "documentado" | "ensaio_laboratorio" | "ensaio_campo"
-    fonte            = Column(String, nullable=False)  # OBRIGATÓRIA: Relatório IPT nº..., Catálogo ProAcústica...
+    # O padrão é o rótulo mais conservador: "ensaio" só quando existe relatório
+    # de ensaio identificado, que alguém possa pedir e ler.
+    confiabilidade   = Column(String, default="referencia_literatura")
+    # "referencia_literatura" | "documentado" | "ensaio_laboratorio" | "ensaio_campo"
+    fonte            = Column(String, nullable=False)  # OBRIGATÓRIA, e tem de ser verificável:
+    # norma com parte e item, documento setorial com edição, relatório de ensaio
+    # com número, ou a admissão explicita de que é valor de referência a confirmar.
 
     sistema     = relationship("SistemaConstrutivo", back_populates="dados_acusticos")
     frequencias = relationship("DadoFrequencia", back_populates="dado_acustico", cascade="all, delete-orphan")

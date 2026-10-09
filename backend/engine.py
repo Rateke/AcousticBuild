@@ -28,6 +28,26 @@ K  = 0.16  # s/m (constante de Sabine)
 F_REFERENCIA = 500.0  # Hz — banda em que a lei da massa é avaliada (ISO 717-1)
 
 
+# Como descrever a procedência de um dado do catálogo em uma linha. O rótulo
+# precisa dizer a verdade: valor de referência de literatura não é ensaio, e
+# chamar de ensaio o que não foi medido é o pior erro que esta plataforma
+# poderia cometer.
+PROCEDENCIA_DO_DADO = {
+    "ensaio_laboratorio": "ensaio de laboratório documentado do sistema",
+    "ensaio_campo": "ensaio em campo documentado do sistema",
+    "documentado": "valor documentado do sistema",
+    "referencia_literatura": (
+        "valor de referência técnica do catálogo — não é ensaio deste sistema"
+    ),
+}
+PROCEDENCIA_PADRAO = PROCEDENCIA_DO_DADO["referencia_literatura"]
+
+
+def _procedencia(confiabilidade: str | None) -> str:
+    """Frase curta que descreve de onde veio o valor usado no cálculo."""
+    return PROCEDENCIA_DO_DADO.get(confiabilidade or "", PROCEDENCIA_PADRAO)
+
+
 def _fontes_das_densidades(composicao: list[dict[str, Any]]) -> list[str]:
     """Fontes das densidades usadas, uma linha por material, sem repetir.
 
@@ -483,12 +503,15 @@ def executar_calculo_motor(dados: dict[str, Any], db: Any | None = None) -> dict
                             }
                         },
                         "metodo": {
-                            "nome": "Previsão simplificada em campo baseada em ensaio de laboratório",
+                            "nome": "Previsão simplificada em campo a partir do índice de laboratório do sistema",
                             "norma": dado_acustico.norma_ensaio or "ABNT NBR ISO 12354-1 / ISO 717-1",
                             "equacao": "DnT,w ≈ Rw - 10*log10(S / A) + 10*log10(T / T0)"
                         },
-                        "confiabilidade": dado_acustico.confiabilidade or "ensaio_laboratorio",
-                        "origem": f"Resultado baseado em ensaio documentado do sistema ({sistema_db.codigo})",
+                        "confiabilidade": dado_acustico.confiabilidade or "referencia_literatura",
+                        "origem": (
+                            f"Resultado baseado em {_procedencia(dado_acustico.confiabilidade)} "
+                            f"({sistema_db.codigo})"
+                        ),
                         "sistema_utilizado": {
                             "codigo": sistema_db.codigo,
                             "nome": sistema_db.nome,
@@ -547,8 +570,11 @@ def executar_calculo_motor(dados: dict[str, Any], db: Any | None = None) -> dict
                             "norma": dado_acustico.norma_ensaio or "ABNT NBR ISO 12354-2 / ISO 717-2",
                             "equacao": "L'nT,w ≈ Ln,w - 10*log10(A / A0) - 10*log10(T / T0)"
                         },
-                        "confiabilidade": dado_acustico.confiabilidade or "documentado",
-                        "origem": f"Resultado baseado em ensaio/dado documentado ({sistema_db.codigo})",
+                        "confiabilidade": dado_acustico.confiabilidade or "referencia_literatura",
+                        "origem": (
+                            f"Resultado baseado em {_procedencia(dado_acustico.confiabilidade)} "
+                            f"({sistema_db.codigo})"
+                        ),
                         "sistema_utilizado": {
                             "codigo": sistema_db.codigo,
                             "nome": sistema_db.nome,

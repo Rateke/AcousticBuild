@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { 
   IconWaveform, IconBuilding, IconPersonCircle, IconChartBars,
-  IconHome, IconZigzag, IconDocument, IconHelp, IconShieldCheck,
-  IconLogout
+  IconDocument, IconHelp, IconShieldCheck, IconLogout
 } from './IconSet';
 import { useAuth } from '../context/AuthContext';
 import Logo from './Logo';

@@ -51,7 +51,10 @@ def test_critico_1_mesmo_ambiente_sistemas_diferentes(db):
     assert dnt_cer != dnt_con, f"Resultados deveriam ser distintos: CER={dnt_cer}, CON={dnt_con}"
     assert dnt_con > dnt_cer, f"Concreto 15cm (Rw=49) deve isolar mais que bloco 14cm (Rw=40): {dnt_con} vs {dnt_cer}"
     assert res_cer["resultado"]["indicador_principal"]["nome"] == "DnT,w"
-    assert "IPT" in res_cer["fontes"][0]
+    # O motor tem de devolver a procedência do valor usado — qualquer que ela seja.
+    # Exigir "IPT" aqui era exigir uma fonte inventada.
+    assert res_cer["fontes"], "o resultado precisa listar a procedência do dado usado"
+    assert res_cer["fontes"][0].strip()
     print(f"\n[OK] Teste Crítico 1: CER-014 ({dnt_cer} dB) != CON-015 ({dnt_con} dB)")
 
 

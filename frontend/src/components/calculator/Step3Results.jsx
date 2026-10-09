@@ -35,8 +35,8 @@ function indicadorDeReferencia(resultado, isImpacto) {
       label: 'Impacto que a laje deixa passar, em laboratório',
       nome: 'Ln,w',
       valor: d.ln_w,
-      hint: confiab === 'documentado'
-        ? 'Valor tabelado da NBR 15575-3, Anexo A'
+      hint: confiab === 'referencia_literatura'
+        ? 'Valor de referência do catálogo — não é ensaio deste sistema'
         : 'Ensaio com máquina de impacto padronizada (ISO 10140-3 / ISO 717-2)',
       termo: 'Lnw',
     };
@@ -49,6 +49,7 @@ function indicadorDeReferencia(resultado, isImpacto) {
     informado_usuario: 'Valor informado para o elemento',
     medicao_usuario: sec?.descricao || 'Calculado a partir da medição no local',
     documentado: 'Valor documentado do elemento',
+    referencia_literatura: 'Valor de referência do catálogo — não é ensaio deste sistema',
   }[confiab] || 'Valor de laboratório do elemento (catálogo)';
 
   return {
@@ -149,7 +150,7 @@ export default function Step3Results({ resultado, user, salvarSimulacao, saved, 
                 <li>
                   <strong>Ainda é projeto?</strong> Volte ao passo 1 e escolha
                   &ldquo;Opção Pronta&rdquo;: {isImpacto ? 'as lajes' : 'as paredes'} do catálogo têm
-                  dado documentado e fonte rastreável.
+                  valor de referência com a procedência declarada.
                 </li>
                 <li>
                   <strong>Precisa exatamente dessa combinação?</strong> Só um ensaio in situ

@@ -53,7 +53,9 @@ Armazena insumos com propriedades físicas documentadas:
 - `nome`: Descrição do material (ex.: *"Bloco cerâmico de vedação"*)
 - `categoria`: *"alvenaria"*, *"revestimento"*, *"concreto"*, *"sistema_leve"*, *"isolamento"*, *"piso"*
 - `densidade`: $\rho$ em kg/m³
-- `fonte`: Documento de referência da densidade (ex.: ABNT NBR 15220-2)
+- `fonte`: procedência da densidade — norma (ABNT NBR 15220-2 Anexo B, NBR 6118 item
+  8.2.2, NBR 14715), derivação declarada a partir de uma massa superficial, ou valor
+  típico a confirmar na ficha do produto especificado
 
 ### 2.2 `variacoes_material`
 Dimensões específicas para o mesmo insumo:
@@ -80,24 +82,40 @@ Ensaios e dados laboratoriais associados exclusivamente ao sistema:
 - `ln_w`: Nível ponderado de pressão sonora de impacto de laboratório (dB)
 - `delta_lw`: Redução de impacto por revestimento atenuador (dB)
 - `norma_ensaio`: Ex.: ABNT NBR ISO 10140-2 / ISO 717-1
-- `fonte`: Identificação expressa do relatório de ensaio (IPT, ProAcústica)
+- `fonte`: procedência verificável do valor — norma com parte e item, documento
+  setorial com edição, relatório de ensaio com número, ou a admissão explícita de que
+  é valor de referência a confirmar
+- `confiabilidade`: `referencia_literatura` (valor de referência, não é ensaio deste
+  sistema), `documentado`, `ensaio_laboratorio` ou `ensaio_campo`. O rótulo acompanha
+  a fonte: "ensaio" só quando existe relatório que alguém possa pedir e ler
 
 ---
 
 ## 3. Catálogo Confiável de Sistemas Cadastrados
 
-| Código | Tipo | Composição | Espessura | Desempenho Acústico | Fonte Documentada |
+> ⚠️ **As fontes desta tabela foram auditadas e corrigidas.** Os números de relatório de
+> ensaio que constavam aqui (IPT, ProAcústica, IBRACON, Placo, Tarkett) e a atribuição das
+> lajes ao "Anexo A" da NBR 15575-3 não puderam ser localizados nem confirmados. Os
+> valores de desempenho foram mantidos; a procedência passou a ser declarada como ela é.
+> A explicação completa, com o caminho para obter fontes de verdade, está em
+> [FONTES.md, seção 5](FONTES.md).
+
+| Código | Tipo | Composição | Espessura | Desempenho Acústico | Procedência do valor |
 |---|---|---|---|---|---|
-| `PAR-CER-014` | Parede | Argamassa 1,5cm + Bloco cerâmico 14cm + Argamassa 1,5cm | 17 cm | $R_w = 40\text{ dB}$ | IPT Relatório nº 1 035 812-205 |
-| `PAR-CER-019` | Parede | Argamassa 1,5cm + Bloco cerâmico 19cm + Argamassa 1,5cm | 22 cm | $R_w = 44\text{ dB}$ | Catálogo ProAcústica ALV-CER-02 |
-| `PAR-CON-010` | Parede | Concreto armado maciço 10 cm | 10 cm | $R_w = 45\text{ dB}$ | IPT Relatório nº 994 210 |
-| `PAR-CON-015` | Parede | Concreto armado maciço 15 cm | 15 cm | $R_w = 49\text{ dB}$ | IPT Relatório nº 1 012 344-205 |
-| `PAR-DRY-073` | Parede | Drywall 73/48 (1 placa ST 12,5mm + lã de vidro 50mm + 1 placa ST) | 7,3 cm | $R_w = 43\text{ dB}$ | Manual Knauf / IBRACON 2019 |
-| `PAR-DRY-098` | Parede | Drywall 98/48 (2 placas ST 12,5mm + lã de vidro 50mm + 2 placas ST) | 9,8 cm | $R_w = 51\text{ dB}$ | Placo do Brasil / IPT nº 1 042 115 |
-| `LAJ-MAC-010` | Piso/Laje | Laje maciça de concreto 10 cm (sem atenuador) | 10 cm | $R_w = 45\text{ dB}$, $L_{n,w} = 80\text{ dB}$ | ABNT NBR 15575-3 Anexo A |
-| `LAJ-MAC-014` | Piso/Laje | Laje maciça de concreto 14 cm (sem atenuador) | 14 cm | $R_w = 49\text{ dB}$, $L_{n,w} = 76\text{ dB}$ | ABNT NBR 15575-3 Anexo A |
-| `LAJ-FLU-014` | Piso/Laje | Laje 14cm + Manta acústica PE 5mm + Contrapiso armado 5cm | 19,5 cm | $R_w = 52\text{ dB}$, $L_{n,w} = 56\text{ dB}$ ($\Delta L_w = 20\text{ dB}$) | Catálogo ProAcústica FLU-01 / IBRACON |
-| `LAJ-VIN-014` | Piso/Laje | Laje 14cm + Contrapiso 3cm + Piso vinílico colado 2mm | 17,2 cm | $R_w = 50\text{ dB}$, $L_{n,w} = 68\text{ dB}$ ($\Delta L_w = 8\text{ dB}$) | Ficha Tarkett Brasil / IPT nº 1 028 411 |
+| `PAR-CER-014` | Parede | Argamassa 1,5cm + Bloco cerâmico 14cm + Argamassa 1,5cm | 17 cm | $R_w = 40\text{ dB}$ | Referência de literatura — a confirmar |
+| `PAR-CER-019` | Parede | Argamassa 1,5cm + Bloco cerâmico 19cm + Argamassa 1,5cm | 22 cm | $R_w = 44\text{ dB}$ | Referência de literatura — a confirmar |
+| `PAR-CON-010` | Parede | Concreto armado maciço 10 cm | 10 cm | $R_w = 45\text{ dB}$ | Referência de literatura — a confirmar |
+| `PAR-CON-015` | Parede | Concreto armado maciço 15 cm | 15 cm | $R_w = 49\text{ dB}$ | Referência de literatura — a confirmar |
+| `PAR-DRY-073` | Parede | Drywall 73/48 (1 placa ST 12,5mm + lã de vidro 50mm + 1 placa ST) | 7,3 cm | $R_w = 43\text{ dB}$ | ✅ *Desempenho Acústico em Sistemas Drywall*, 3. ed., Assoc. Bras. do Drywall — faixa 40 a 44 dB |
+| `PAR-DRY-098` | Parede | Drywall 98/48 (2 placas ST 12,5mm + lã de vidro 50mm + 2 placas ST) | 9,8 cm | $R_w = 51\text{ dB}$ | ✅ Mesmo manual — faixa 50 a 54 dB |
+| `LAJ-MAC-010` | Piso/Laje | Laje maciça de concreto 10 cm (sem atenuador) | 10 cm | $R_w = 45\text{ dB}$, $L_{n,w} = 80\text{ dB}$ | Referência de literatura — a confirmar |
+| `LAJ-MAC-014` | Piso/Laje | Laje maciça de concreto 14 cm (sem atenuador) | 14 cm | $R_w = 49\text{ dB}$, $L_{n,w} = 76\text{ dB}$ | Referência de literatura — a confirmar |
+| `LAJ-FLU-014` | Piso/Laje | Laje 14cm + Manta acústica PE 5mm + Contrapiso armado 5cm | 19,5 cm | $R_w = 52\text{ dB}$, $L_{n,w} = 56\text{ dB}$ ($\Delta L_w = 20\text{ dB}$) | Referência de literatura — a confirmar |
+| `LAJ-VIN-014` | Piso/Laje | Laje 14cm + Contrapiso 3cm + Piso vinílico colado 2mm | 17,2 cm | $R_w = 50\text{ dB}$, $L_{n,w} = 68\text{ dB}$ ($\Delta L_w = 8\text{ dB}$) | Referência de literatura — a confirmar |
+
+O $\Delta L_w$ das duas últimas lajes é a melhoria sobre a laje nua de 14 cm (76 dB) e
+**já está embutido** no $L_{n,w}$ da linha: $76 - 20 = 56$ e $76 - 8 = 68$. O campo é
+informativo e não entra na conta.
 
 ---
 

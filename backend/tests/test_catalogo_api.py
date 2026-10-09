@@ -53,7 +53,13 @@ def test_api_obter_sistema_codigo():
     assert len(sis["camadas"]) == 3
     assert len(sis["dados_acusticos"]) >= 1
     assert sis["dados_acusticos"][0]["rw"] == 40.0
-    assert "IPT" in sis["dados_acusticos"][0]["fonte"]
+    # Antes este teste exigia "IPT" na fonte, travando no código uma atribuição a
+    # relatório de ensaio que não existe. O que precisa ser verdade é outra coisa:
+    # todo dado declara uma procedência, e o rótulo não promete ensaio sem ensaio.
+    dado = sis["dados_acusticos"][0]
+    assert dado["fonte"], "todo dado acústico precisa declarar a procedência"
+    assert dado["confiabilidade"] == "referencia_literatura"
+    assert "ensaio" not in dado["fonte"].lower() or "não citar como ensaio" in dado["fonte"].lower()
 
 
 def test_api_montar_sistema():

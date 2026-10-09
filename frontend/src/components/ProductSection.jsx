@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-import { IconWaveform, IconSpeakerWave, IconBriefcase, IconChartBars } from './IconSet';
 import Reveal from './Reveal';
 import stylesProduct from '../style/ProductSection.module.css';
 import styles from '../style/WhatWeAreSection.module.css';

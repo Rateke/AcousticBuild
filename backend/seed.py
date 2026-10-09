@@ -3,8 +3,18 @@
 Princípios aplicados (Fase 2 do Relatório Mestre):
 1. Qualidade e confiabilidade documental > quantidade de registros.
 2. Material não possui desempenho acústico (sem Rw em materiais individuais).
-3. Dados acústicos pertencem aos sistemas e possuem fontes técnicas obrigatórias e verificáveis.
-4. Nenhum valor de ensaio foi inventado ou estimado sem referência técnica.
+3. Dados acústicos pertencem aos sistemas, nunca aos materiais isolados.
+4. Cada valor declara a sua procedência real, e o rótulo de confiabilidade
+   acompanha essa procedência:
+     - "referencia_literatura": valor de referência técnica, de faixa
+       publicada ou de literatura da área. NÃO é ensaio deste sistema.
+     - "ensaio_laboratorio": só para valor vindo de relatório de ensaio
+       identificado, que se possa pedir e ler.
+   Dos dez sistemas, somente as duas paredes drywall têm hoje fonte
+   pública rastreável (manual setorial da Associação Brasileira do
+   Drywall). Os outros oito são valores de referência aguardando um
+   relatório de ensaio de verdade — e dizem isso na própria fonte, em vez
+   de inventar um número de relatório.
 """
 from database import SessionLocal, engine
 from models import (
@@ -27,7 +37,7 @@ def seed_database():
             print("Catálogo já existente no banco de dados. Pulando seed.")
             return
 
-        print("Populando catálogo de materiais com propriedades físicas documentadas...")
+        print("Populando catálogo de materiais com propriedades físicas e procedência declarada...")
 
         # -------------------------------------------------------------
         # 1. MATERIAIS INDIVIDUAIS
@@ -36,10 +46,15 @@ def seed_database():
             nome="Bloco cerâmico de vedação",
             categoria="alvenaria",
             subcategoria="ceramico",
-            densidade=1200.0,
+            # Densidade APARENTE do bloco vazado (barro + vazios), que é o que
+            # interessa para massa superficial — não a do barro cozido maciço.
+            # Antes havia 1200 kg/m³ aqui: multiplicado pela espessura, dava
+            # 168 kg/m² no bloco de 14 cm, 53% acima dos 110 kg/m² que a própria
+            # variação declara. Os vazios do bloco explicam a diferença.
+            densidade=780.0,
             unidade_densidade="kg/m³",
-            descricao="Bloco vazado cerâmico de furos horizontais para alvenaria de vedação.",
-            fonte="ABNT NBR 15220-2 / Manual da Cerâmica Vermelha"
+            descricao="Bloco vazado cerâmico de furos horizontais para alvenaria de vedação. A densidade informada é a aparente do bloco, já descontados os vazios.",
+            fonte="Densidade aparente derivada da massa de 110 kg/m² da variação de 14 cm (autoria própria: 110 ÷ 0,14 ≈ 780 kg/m³). O barro cozido maciço fica entre 1000 e 2000 kg/m³ pela ABNT NBR 15220-2, Anexo B — faixa que NÃO se aplica ao bloco vazado."
         )
 
         mat_bloco_conc = Material(
@@ -48,8 +63,8 @@ def seed_database():
             subcategoria="concreto",
             densidade=1400.0,
             unidade_densidade="kg/m³",
-            descricao="Bloco de concreto simples para alvenaria.",
-            fonte="ABNT NBR 15220-2"
+            descricao="Bloco de concreto simples vazado para alvenaria. Densidade aparente do bloco, já descontados os vazios.",
+            fonte="Valor típico de densidade aparente de bloco de concreto vazado — confirmar na ficha técnica do bloco especificado. A ABNT NBR 15220-2, Anexo B, tabela o concreto maciço (2200 a 2400 kg/m³), não o bloco vazado."
         )
 
         mat_argamassa = Material(
@@ -59,27 +74,36 @@ def seed_database():
             densidade=1900.0,
             unidade_densidade="kg/m³",
             descricao="Argamassa comum para reboco/emboço e assentamento.",
-            fonte="ABNT NBR 15220-2"
+            fonte="ABNT NBR 15220-2, Anexo B — argamassa comum: faixa de 1800 a 2100 kg/m³. Adotado o valor central da faixa."
         )
 
         mat_concreto = Material(
             nome="Concreto armado maciço",
             categoria="concreto",
             subcategoria="estrutural",
-            densidade=2400.0,
+            # 2400 kg/m³ é o valor da NBR 6118 para concreto SIMPLES; para
+            # concreto ARMADO a mesma norma manda usar 2500. O material aqui é
+            # armado (laje e parede estrutural), então 2400 contrariava a
+            # própria norma citada e subestimava a massa — e a massa é o que a
+            # lei da massa usa para prever isolamento. A NBR 15220-2 traz 2200
+            # a 2400 kg/m³, mas em contexto térmico e para concreto sem
+            # armadura: por isso saiu da fonte.
+            densidade=2500.0,
             unidade_densidade="kg/m³",
-            descricao="Concreto estrutural de densidade normal.",
-            fonte="ABNT NBR 6118 / ABNT NBR 15220-2"
+            descricao="Concreto armado estrutural de densidade normal.",
+            fonte="ABNT NBR 6118, item 8.2.2 — concreto armado: 2500 kg/m³ (concreto simples: 2400 kg/m³)."
         )
 
         mat_gesso = Material(
             nome="Placa de gesso acartonado (Drywall)",
             categoria="sistema_leve",
             subcategoria="gesso",
-            densidade=800.0,
+            # 800 kg/m³ × 12,5 mm = 10,0 kg/m², mas a variação da chapa declara
+            # 9,5 kg/m². Ajustado para que os dois campos contem a mesma história.
+            densidade=760.0,
             unidade_densidade="kg/m³",
-            descricao="Placa standard para sistemas de paredes e forros leves.",
-            fonte="ABNT NBR 14715"
+            descricao="Placa standard (ST) para sistemas de paredes e forros leves.",
+            fonte="Densidade derivada da massa de 9,5 kg/m² da chapa ST de 12,5 mm (autoria própria: 9,5 ÷ 0,0125 = 760 kg/m³). A ABNT NBR 14715-1 fixa as exigências da chapa, não um valor único de densidade."
         )
 
         mat_la_vidro = Material(
@@ -89,7 +113,7 @@ def seed_database():
             densidade=14.0,
             unidade_densidade="kg/m³",
             descricao="Painel fonoabsorvente para preenchimento de cavidade em sistemas leves.",
-            fonte="Catálogo Técnico Saint-Gobain / ISOVER"
+            fonte="Valor típico de painel de lã de vidro para cavidade (faixa usual de 10 a 20 kg/m³) — confirmar na ficha técnica do produto especificado. A lã atua por absorção, não por massa: sua parcela na massa superficial é desprezível."
         )
 
         mat_manta_pe = Material(
@@ -99,7 +123,7 @@ def seed_database():
             densidade=30.0,
             unidade_densidade="kg/m³",
             descricao="Manta resiliente para atenuação de ruído de impacto sob piso flutuante.",
-            fonte="Catálogo ProAcústica de Sistemas de Piso"
+            fonte="Valor típico de manta de polietileno expandido (faixa usual de 25 a 35 kg/m³) — confirmar na ficha técnica do produto especificado."
         )
 
         mat_contrapiso = Material(
@@ -109,7 +133,7 @@ def seed_database():
             densidade=2000.0,
             unidade_densidade="kg/m³",
             descricao="Camada de regularização para recebimento de acabamento de piso.",
-            fonte="ABNT NBR 15220-2"
+            fonte="ABNT NBR 15220-2, Anexo B — argamassa comum: faixa de 1800 a 2100 kg/m³. Adotado 2000 kg/m³ para contrapiso regularizado."
         )
 
         mat_vinilico = Material(
@@ -119,7 +143,7 @@ def seed_database():
             densidade=1300.0,
             unidade_densidade="kg/m³",
             descricao="Revestimento vinílico flexível LVT colado sobre contrapiso.",
-            fonte="Ficha Técnica Tarkett Brasil"
+            fonte="Valor típico de régua vinílica LVT — confirmar na ficha técnica do produto especificado."
         )
 
         mat_ceramica = Material(
@@ -129,7 +153,7 @@ def seed_database():
             densidade=2200.0,
             unidade_densidade="kg/m³",
             descricao="Revestimento cerâmico esmaltado assentado com argamassa colante.",
-            fonte="ABNT NBR 15220-2"
+            fonte="Valor típico de placa cerâmica/porcelanato (faixa usual de 2000 a 2400 kg/m³) — confirmar na ficha técnica. A faixa da ABNT NBR 15220-2 para cerâmica (1000 a 2000 kg/m³) é de tijolo e telha, não de porcelanato prensado."
         )
 
         db.add_all([
@@ -148,7 +172,7 @@ def seed_database():
             espessura=0.14,
             massa_superficial=110.0,
             descricao="Bloco cerâmico vedação 14x19x29 cm",
-            fonte="NBR 15220-2 / ProAcústica"
+            fonte="Valor típico de alvenaria de bloco cerâmico vazado de 14 cm, com juntas de assentamento — confirmar pesando o bloco especificado (massa do bloco ÷ área da face)."
         )
         var_bloco_cer_19 = VariacaoMaterial(
             material_id=mat_bloco_cer.id,
@@ -156,7 +180,7 @@ def seed_database():
             espessura=0.19,
             massa_superficial=145.0,
             descricao="Bloco cerâmico vedação 19x19x29 cm",
-            fonte="NBR 15220-2 / ProAcústica"
+            fonte="Valor típico de alvenaria de bloco cerâmico vazado de 19 cm, com juntas de assentamento — confirmar pesando o bloco especificado (massa do bloco ÷ área da face)."
         )
 
         var_argamassa_15 = VariacaoMaterial(
@@ -165,32 +189,32 @@ def seed_database():
             espessura=0.015,
             massa_superficial=28.5,
             descricao="Reboco padrão 15 mm",
-            fonte="ABNT NBR 15220-2"
+            fonte="ABNT NBR 15220-2, Anexo B (1900 kg/m³ × 0,015 m = 28,5 kg/m²)"
         )
 
         var_concreto_10 = VariacaoMaterial(
             material_id=mat_concreto.id,
             nome_variacao="10 cm",
             espessura=0.10,
-            massa_superficial=240.0,
+            massa_superficial=250.0,
             descricao="Laje ou parede de concreto maciço 10 cm",
-            fonte="ABNT NBR 15220-2"
+            fonte="ABNT NBR 6118, item 8.2.2 (2500 kg/m³ × 0,10 m = 250 kg/m²)"
         )
         var_concreto_14 = VariacaoMaterial(
             material_id=mat_concreto.id,
             nome_variacao="14 cm",
             espessura=0.14,
-            massa_superficial=336.0,
+            massa_superficial=350.0,
             descricao="Laje ou parede de concreto maciço 14 cm",
-            fonte="ABNT NBR 15220-2"
+            fonte="ABNT NBR 6118, item 8.2.2 (2500 kg/m³ × 0,14 m = 350 kg/m²)"
         )
         var_concreto_15 = VariacaoMaterial(
             material_id=mat_concreto.id,
             nome_variacao="15 cm",
             espessura=0.15,
-            massa_superficial=360.0,
+            massa_superficial=375.0,
             descricao="Parede de concreto maciço 15 cm",
-            fonte="ABNT NBR 15220-2"
+            fonte="ABNT NBR 6118, item 8.2.2 (2500 kg/m³ × 0,15 m = 375 kg/m²)"
         )
 
         var_gesso_125 = VariacaoMaterial(
@@ -199,7 +223,7 @@ def seed_database():
             espessura=0.0125,
             massa_superficial=9.5,
             descricao="Chapa Standard de gesso acartonado 12,5 mm",
-            fonte="ABNT NBR 14715"
+            fonte="Massa típica de chapa ST de 12,5 mm (faixa usual de 9 a 10 kg/m²) — confirmar na ficha técnica do fabricante especificado."
         )
 
         var_la_50 = VariacaoMaterial(
@@ -208,7 +232,7 @@ def seed_database():
             espessura=0.05,
             massa_superficial=0.7,
             descricao="Painel de lã de vidro espessura 50 mm",
-            fonte="Catálogo ISOVER"
+            fonte="Massa derivada da densidade típica de 14 kg/m³ (autoria própria: 14 × 0,05 = 0,7 kg/m²). Parcela desprezível na massa do sistema."
         )
 
         var_manta_5 = VariacaoMaterial(
@@ -217,7 +241,7 @@ def seed_database():
             espessura=0.005,
             massa_superficial=0.15,
             descricao="Manta acústica PE expandido 5 mm",
-            fonte="Catálogo ProAcústica"
+            fonte="Massa derivada da densidade típica de 30 kg/m³ (autoria própria: 30 × 0,005 = 0,15 kg/m²). O efeito acústico da manta vem da sua elasticidade, não da massa."
         )
 
         var_contrapiso_3 = VariacaoMaterial(
@@ -226,7 +250,7 @@ def seed_database():
             espessura=0.03,
             massa_superficial=60.0,
             descricao="Contrapiso argamassa 3 cm",
-            fonte="ABNT NBR 15220-2"
+            fonte="ABNT NBR 15220-2, Anexo B (2000 kg/m³ × 0,03 m = 60 kg/m²)"
         )
         var_contrapiso_5 = VariacaoMaterial(
             material_id=mat_contrapiso.id,
@@ -234,7 +258,7 @@ def seed_database():
             espessura=0.05,
             massa_superficial=100.0,
             descricao="Contrapiso armado 5 cm para piso flutuante",
-            fonte="ABNT NBR 15220-2"
+            fonte="ABNT NBR 15220-2, Anexo B (2000 kg/m³ × 0,05 m = 100 kg/m²)"
         )
 
         var_vinilico_2 = VariacaoMaterial(
@@ -243,7 +267,7 @@ def seed_database():
             espessura=0.002,
             massa_superficial=2.6,
             descricao="Piso vinílico colado 2 mm",
-            fonte="Ficha Técnica Tarkett"
+            fonte="Massa derivada da densidade típica de 1300 kg/m³ (autoria própria: 1300 × 0,002 = 2,6 kg/m²) — confirmar na ficha técnica do produto."
         )
 
         db.add_all([
@@ -254,7 +278,7 @@ def seed_database():
         ])
         db.flush()
 
-        print("Cadastrando os 10 sistemas documentados com fontes rastreáveis...")
+        print("Cadastrando os 10 sistemas do catálogo, cada dado com a sua procedência...")
 
         # -------------------------------------------------------------
         # 3. SISTEMAS CONSTRUTIVOS & DADOS ACÚSTICOS
@@ -279,10 +303,9 @@ def seed_database():
                 sistema_id=sis_1.id,
                 tipo_ruido="aereo",
                 rw=40.0,
-                norma_ensaio="ABNT NBR ISO 10140-2 / ISO 717-1",
-                condicao_ensaio="Câmara reverberante de laboratório, sem transmissão lateral marginal.",
-                confiabilidade="ensaio_laboratorio",
-                fonte="IPT - Instituto de Pesquisas Tecnológicas, Relatório de Ensaio nº 1 035 812-205"
+                condicao_ensaio="Valor de referência para alvenaria de bloco cerâmico vazado de 14 cm revestida nas duas faces. Não é ensaio deste sistema: nenhum relatório de laboratório foi localizado para esta composição.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             )
         ])
 
@@ -305,10 +328,9 @@ def seed_database():
                 sistema_id=sis_2.id,
                 tipo_ruido="aereo",
                 rw=44.0,
-                norma_ensaio="ABNT NBR ISO 10140-2 / ISO 717-1",
-                condicao_ensaio="Laboratório credenciado com juntas preenchidas.",
-                confiabilidade="ensaio_laboratorio",
-                fonte="Catálogo ProAcústica de Desempenho Acústico, Ficha ALV-CER-02"
+                condicao_ensaio="Valor de referência para alvenaria de bloco cerâmico vazado de 19 cm revestida nas duas faces. Não é ensaio deste sistema.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             )
         ])
 
@@ -319,7 +341,7 @@ def seed_database():
             tipo_elemento="parede",
             descricao="Parede estrutural moldada in loco de concreto armado maciço 10 cm.",
             espessura_total=0.10,
-            massa_superficial_total=240.0
+            massa_superficial_total=250.0
         )
         db.add(sis_3)
         db.flush()
@@ -329,10 +351,9 @@ def seed_database():
                 sistema_id=sis_3.id,
                 tipo_ruido="aereo",
                 rw=45.0,
-                norma_ensaio="ABNT NBR ISO 10140-2 / ISO 717-1",
-                condicao_ensaio="Ensaio de laboratório sem perdas laterais.",
-                confiabilidade="ensaio_laboratorio",
-                fonte="IPT - Instituto de Pesquisas Tecnológicas, Relatório de Ensaio nº 994 210"
+                condicao_ensaio="Valor de referência para parede de concreto armado maciço de 10 cm. Não é ensaio deste sistema.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             )
         ])
 
@@ -343,7 +364,7 @@ def seed_database():
             tipo_elemento="parede",
             descricao="Parede de concreto armado maciço 15 cm.",
             espessura_total=0.15,
-            massa_superficial_total=360.0
+            massa_superficial_total=375.0
         )
         db.add(sis_4)
         db.flush()
@@ -353,10 +374,9 @@ def seed_database():
                 sistema_id=sis_4.id,
                 tipo_ruido="aereo",
                 rw=49.0,
-                norma_ensaio="ABNT NBR ISO 10140-2 / ISO 717-1",
-                condicao_ensaio="Ensaio laboratorial câmara reverberante.",
-                confiabilidade="ensaio_laboratorio",
-                fonte="IPT - Instituto de Pesquisas Tecnológicas, Relatório Técnico nº 1 012 344-205"
+                condicao_ensaio="Valor de referência para parede de concreto armado maciço de 15 cm. Não é ensaio deste sistema.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             )
         ])
 
@@ -380,9 +400,9 @@ def seed_database():
                 tipo_ruido="aereo",
                 rw=43.0,
                 norma_ensaio="ABNT NBR ISO 10140-2 / ISO 717-1",
-                condicao_ensaio="Ensaio em laboratório conforme NBR ISO 10140 com montante M48 e isolamento com lã de vidro.",
-                confiabilidade="ensaio_laboratorio",
-                fonte="Manual de Desempenho Acústico Knauf Drywall / Relatório IBRACON 2019"
+                condicao_ensaio="Faixa de Rw publicada em manual setorial, consolidada de ensaios de laboratório de fabricantes: 40 a 44 dB para o sistema 73/48 com uma chapa ST de 12,5 mm por face e lã de vidro de 50 mm na cavidade. Adotados 43 dB, dentro da faixa.",
+                confiabilidade="referencia_literatura",
+                fonte="Desempenho Acústico em Sistemas Drywall, 3. ed. Associação Brasileira do Drywall, com revisão técnica da ProAcústica — faixa de 40 a 44 dB para esta configuração."
             )
         ])
 
@@ -408,9 +428,9 @@ def seed_database():
                 tipo_ruido="aereo",
                 rw=51.0,
                 norma_ensaio="ABNT NBR ISO 10140-2 / ISO 717-1",
-                condicao_ensaio="Ensaio laboratorial câmara acústica dupla camada.",
-                confiabilidade="ensaio_laboratorio",
-                fonte="Catálogo Técnico Placo do Brasil / IPT Relatório de Ensaio nº 1 042 115"
+                condicao_ensaio="Faixa de Rw publicada em manual setorial, consolidada de ensaios de laboratório de fabricantes: 50 a 54 dB para duas chapas ST de 12,5 mm por face com lã mineral na cavidade. Adotados 51 dB, dentro da faixa.",
+                confiabilidade="referencia_literatura",
+                fonte="Desempenho Acústico em Sistemas Drywall, 3. ed. Associação Brasileira do Drywall, com revisão técnica da ProAcústica — faixa de 50 a 54 dB para esta configuração."
             )
         ])
 
@@ -421,7 +441,7 @@ def seed_database():
             tipo_elemento="piso_laje",
             descricao="Laje estrutural básica de concreto maciço 10 cm.",
             espessura_total=0.10,
-            massa_superficial_total=240.0
+            massa_superficial_total=250.0
         )
         db.add(sis_7)
         db.flush()
@@ -431,20 +451,18 @@ def seed_database():
                 sistema_id=sis_7.id,
                 tipo_ruido="aereo",
                 rw=45.0,
-                norma_ensaio="ABNT NBR 15575-3:2013",
-                condicao_ensaio="Valor documentado em norma técnica de desempenho.",
-                confiabilidade="documentado",
-                fonte="ABNT NBR 15575-3:2013 Anexo A, Tabela A.1"
+                condicao_ensaio="Valor de referência para laje maciça de concreto armado de 10 cm, nua. A atribuição anterior a uma tabela do Anexo A da NBR 15575-3 foi retirada: não foi possível confirmar que a norma traga essa tabela de valores.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             ),
             DadoAcustico(
                 sistema_id=sis_7.id,
                 tipo_ruido="impacto",
                 ln_w=80.0,
                 delta_lw=0.0,
-                norma_ensaio="ABNT NBR 15575-3:2013",
-                condicao_ensaio="Valor documentado para piso sem revestimento resiliente.",
-                confiabilidade="documentado",
-                fonte="ABNT NBR 15575-3:2013 Anexo A, Tabela A.2"
+                condicao_ensaio="Valor de referência para laje nua de 10 cm, sem revestimento resiliente (por isso ΔLw = 0). A atribuição anterior ao Anexo A da NBR 15575-3 foi retirada: não foi possível confirmar essa tabela.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             )
         ])
 
@@ -455,7 +473,7 @@ def seed_database():
             tipo_elemento="piso_laje",
             descricao="Laje estrutural de concreto maciço 14 cm.",
             espessura_total=0.14,
-            massa_superficial_total=336.0
+            massa_superficial_total=350.0
         )
         db.add(sis_8)
         db.flush()
@@ -465,20 +483,18 @@ def seed_database():
                 sistema_id=sis_8.id,
                 tipo_ruido="aereo",
                 rw=49.0,
-                norma_ensaio="ABNT NBR 15575-3:2013",
-                condicao_ensaio="Valor normativo documentado.",
-                confiabilidade="documentado",
-                fonte="ABNT NBR 15575-3:2013 Anexo A, Tabela A.1"
+                condicao_ensaio="Valor de referência para laje maciça de concreto armado de 14 cm, nua. A atribuição anterior a uma tabela do Anexo A da NBR 15575-3 foi retirada: não foi possível confirmar que a norma traga essa tabela de valores.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             ),
             DadoAcustico(
                 sistema_id=sis_8.id,
                 tipo_ruido="impacto",
                 ln_w=76.0,
                 delta_lw=0.0,
-                norma_ensaio="ABNT NBR 15575-3:2013",
-                condicao_ensaio="Valor normativo documentado para laje nua.",
-                confiabilidade="documentado",
-                fonte="ABNT NBR 15575-3:2013 Anexo A, Tabela A.2"
+                condicao_ensaio="Valor de referência para laje nua de 14 cm, sem revestimento resiliente (por isso ΔLw = 0). É a base dos dois sistemas seguintes: 76 dB menos a melhoria do revestimento.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             )
         ])
 
@@ -489,7 +505,7 @@ def seed_database():
             tipo_elemento="piso_laje",
             descricao="Sistema de piso flutuante de alto desempenho para isolamento de impacto e aéreo.",
             espessura_total=0.195,
-            massa_superficial_total=436.15
+            massa_superficial_total=450.15
         )
         db.add(sis_9)
         db.flush()
@@ -501,21 +517,23 @@ def seed_database():
                 sistema_id=sis_9.id,
                 tipo_ruido="aereo",
                 rw=52.0,
-                norma_ensaio="ABNT NBR ISO 10140-2 / ISO 717-1",
-                condicao_ensaio="Ensaio laboratorial com contrapiso desacoplado nas bordas perimetrais.",
-                confiabilidade="ensaio_laboratorio",
-                fonte="Catálogo ProAcústica de Sistemas de Piso, Ficha FLU-01"
+                condicao_ensaio="Valor de referência para laje de 14 cm com contrapiso de 5 cm desacoplado nas bordas. Não é ensaio deste sistema.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             ),
             DadoAcustico(
                 sistema_id=sis_9.id,
                 tipo_ruido="impacto",
                 ln_w=56.0,
+                # ΔLw é a melhoria que o piso flutuante traz SOBRE a laje nua, e
+                # o ln_w acima JÁ a inclui: laje de 14 cm nua = 76 dB; 76 - 20 = 56.
+                # É informação declarada, não entra na conta — subtrair de novo
+                # contaria a manta duas vezes.
                 delta_lw=20.0,
                 rigidez_dinamica=25.0,
-                norma_ensaio="ABNT NBR ISO 10140-3 / ISO 717-2",
-                condicao_ensaio="Máquina de percussão padrão sobre contrapiso flutuante.",
-                confiabilidade="ensaio_laboratorio",
-                fonte="Catálogo ProAcústica de Sistemas de Piso, Ficha FLU-01 / Ensaio IBRACON"
+                condicao_ensaio="Valor de referência para contrapiso flutuante de 5 cm sobre manta resiliente de 5 mm, com bordas desacopladas. Não é ensaio deste sistema. A rigidez dinâmica de 25 MN/m³ também é valor típico de manta de 5 mm — confirmar na ficha do produto especificado.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             )
         ])
 
@@ -526,7 +544,7 @@ def seed_database():
             tipo_elemento="piso_laje",
             descricao="Sistema de laje de concreto com acabamento vinílico resiliente colado.",
             espessura_total=0.172,
-            massa_superficial_total=398.6
+            massa_superficial_total=412.6
         )
         db.add(sis_10)
         db.flush()
@@ -538,25 +556,25 @@ def seed_database():
                 sistema_id=sis_10.id,
                 tipo_ruido="aereo",
                 rw=50.0,
-                norma_ensaio="ABNT NBR ISO 10140-2 / ISO 717-1",
-                condicao_ensaio="Ensaio laboratorial câmara reverberante.",
-                confiabilidade="ensaio_laboratorio",
-                fonte="Ficha Técnica de Acústica Tarkett Brasil / IPT nº 1 028 411"
+                condicao_ensaio="Valor de referência para laje de 14 cm com contrapiso de 3 cm e piso vinílico colado. Não é ensaio deste sistema.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             ),
             DadoAcustico(
                 sistema_id=sis_10.id,
                 tipo_ruido="impacto",
                 ln_w=68.0,
+                # Mesma relação do sistema 9: laje nua 76 dB - 8 dB do vinílico
+                # = 68 dB. O ΔLw já está embutido no ln_w; não subtrair outra vez.
                 delta_lw=8.0,
-                norma_ensaio="ABNT NBR ISO 10140-3 / ISO 717-2",
-                condicao_ensaio="Máquina de percussão padrão sobre piso vinílico colado.",
-                confiabilidade="ensaio_laboratorio",
-                fonte="Ficha Técnica de Acústica Tarkett Brasil / IPT nº 1 028 411"
+                condicao_ensaio="Valor de referência para piso vinílico de 2 mm colado sobre contrapiso. Não é ensaio deste sistema.",
+                confiabilidade="referencia_literatura",
+                fonte="Valor típico de literatura técnica de acústica de edificações — fonte a confirmar. Não citar como ensaio."
             )
         ])
 
         db.commit()
-        print("Catálogo de 10 sistemas documentados semeado com sucesso!")
+        print("Catálogo de 10 sistemas semeado com sucesso!")
 
     except Exception as e:
         db.rollback()

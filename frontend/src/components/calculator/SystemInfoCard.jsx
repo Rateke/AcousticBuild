@@ -139,7 +139,7 @@ export default function SystemInfoCard({
 
         {possuiDadoDocumentado && dadosAcusticos[0]?.rw && (
           <div>
-            <div style={{ fontSize: '0.78rem', color: 'rgba(255, 255, 255, 0.6)' }}>Índice Rw de Laboratório</div>
+            <div style={{ fontSize: '0.78rem', color: 'rgba(255, 255, 255, 0.6)' }}>Índice Rw de referência</div>
             <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#2F6FFF' }}>
               {dadosAcusticos[0].rw} dB
             </div>
@@ -148,7 +148,7 @@ export default function SystemInfoCard({
 
         {possuiDadoDocumentado && dadosAcusticos[0]?.ln_w && (
           <div>
-            <div style={{ fontSize: '0.78rem', color: 'rgba(255, 255, 255, 0.6)' }}>Nível Ln,w de Laboratório</div>
+            <div style={{ fontSize: '0.78rem', color: 'rgba(255, 255, 255, 0.6)' }}>Nível Ln,w de referência</div>
             <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#2F6FFF' }}>
               {dadosAcusticos[0].ln_w} dB
             </div>
@@ -160,7 +160,7 @@ export default function SystemInfoCard({
       <div style={{ marginTop: '14px', fontSize: '0.82rem', lineHeight: '1.4' }}>
         {possuiDadoDocumentado ? (
           <div style={{ color: 'rgba(255, 255, 255, 0.75)' }}>
-            <strong style={{ color: '#FFFFFF' }}>Fonte do ensaio: </strong>
+            <strong style={{ color: '#FFFFFF' }}>Procedência do valor: </strong>
             {fontes[0] || dadosAcusticos[0]?.fonte}
             {dadosAcusticos[0]?.norma_ensaio && (
               <span style={{ display: 'block', color: 'rgba(255, 255, 255, 0.55)', marginTop: '2px' }}>
