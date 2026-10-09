@@ -6,6 +6,9 @@
 *.env
 .env
 .env.*
+# o modelo sem valores reais PRECISA ir para o repositório
+!.env.example
+!backend/.env.example
 *.db
 *.sqlite
 *.sqlite3
@@ -49,3 +52,6 @@ ehthumbs.db
 # --- Configuração local de ferramentas de lint/tipagem ---
 pyrightconfig.json
 ruff.toml
+
+# bilhete com a chave de produção: só local
+CHAVE-PARA-VERCEL.txt
